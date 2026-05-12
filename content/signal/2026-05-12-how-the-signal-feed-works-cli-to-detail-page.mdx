@@ -1,0 +1,92 @@
+---
+title: "How the Signal feed works: CLI to detail page"
+date: "2026-05-12"
+week: "W20"
+tags: ["meta", "mdx", "nextjs", "architecture"]
+excerpt: "Three pieces glue this blog together — a bash CLI for posting, gray-matter for frontmatter parsing, and next-mdx-remote for rendering. No CMS, no database, no admin panel. Just files."
+---
+
+## The shape of the problem
+
+I wanted a blog that lives inside my portfolio without becoming a separate app. No CMS. No admin panel. No database. The constraint: I should be able to post from any terminal — including a Claude agent running inside a different project — without remembering paths, slugs, or git commands.
+
+The system that came out has three small pieces.
+
+## 1. The CLI
+
+A single bash script at `scripts/signal.sh`, symlinked to `/usr/local/bin/signal`, makes the workflow one command:
+
+```bash
+signal "Title" "Excerpt" "tags" <<'BODY'
+## Markdown body here
+BODY
+```
+
+The script does four things:
+
+1. Builds a slug from the title — a `tr` + `sed` chain that lowercases, strips non-alphanum, collapses dashes, caps at 50 chars.
+2. Generates a YAML frontmatter block with today's date, ISO week, and the tags array.
+3. Reads stdin only if it's not a terminal — so passing a heredoc puts the markdown body after the frontmatter, and not passing one keeps the file excerpt-only.
+4. Stages just that one file (`git add content/signal/<file>`), commits, pushes if `origin` exists.
+
+The "only stage one file" detail matters. I'm usually in the middle of editing something else in the portfolio repo when I post a signal. The script doesn't touch those other changes.
+
+## 2. Frontmatter parsing
+
+Every `.mdx` in `content/signal/` opens with a YAML block:
+
+```yaml
+title: "Some title"
+date: "2026-05-12"
+week: "W20"
+tags: ["tag1", "tag2"]
+excerpt: "Short summary."
+```
+
+`gray-matter` turns that into a `{ data, content }` object. The `data` becomes the metadata for the feed card; the `content` is the raw markdown body, untouched, ready for rendering.
+
+The function that loads everything lives at `src/lib/signal.ts`:
+
+```ts
+const { data, content } = matter(fileContent);
+
+return {
+  slug: file.replace(/\.(mdx|md)$/, ""),
+  title: String(data.title ?? "Untitled"),
+  date: String(data.date ?? ""),
+  tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
+  excerpt: String(data.excerpt ?? ""),
+  content: content.trim(),
+};
+```
+
+Two exported functions: `getSignalEntries()` returns the list — without bodies — for the feed, and `getSignalEntry(slug)` returns a single entry with the body.
+
+## 3. Rendering
+
+Next.js 16 App Router handles the rest. The dynamic route lives at `src/app/signal/[slug]/page.tsx` and uses three things:
+
+- `generateStaticParams()` — pre-renders all entries at build time
+- `await params` — Next.js 16 made `params` a Promise; you cannot access `.slug` directly anymore
+- `MDXRemote` from `next-mdx-remote/rsc` — the React Server Components variant. Async, runs at build, no client hydration needed for the markdown content itself.
+
+A custom MDX component map at `src/components/mdx/MDXComponents.tsx` maps every markdown element to a styled component:
+
+- `h1`, `h2`, `h3` → serif italic, scaled
+- `p` → mono, low-opacity foreground
+- `code` (inline) → gold accent with a hairline border
+- `pre` → dark block with a fine border
+- `blockquote` → left gold rule, italic serif
+- `a` → gold underline, hover state
+
+Headers feel like film titles. Code blocks feel like terminals. The body reads like a technical log. The aesthetic stays consistent with the rest of the portfolio.
+
+## Why this works
+
+Three properties I care about:
+
+- **The build is the deploy.** Push to GitHub, Vercel rebuilds, statically renders every entry. No runtime database calls. Detail pages serve from CDN.
+- **The interface is the file.** I never log into anything. A markdown file is the unit of work. Version control is the audit log.
+- **Any agent can post.** Because the CLI is one command, a Claude window running in any other project can post here just by knowing the command exists.
+
+The whole thing is around 300 lines of code across four files. The complexity is in the discipline, not the system.
