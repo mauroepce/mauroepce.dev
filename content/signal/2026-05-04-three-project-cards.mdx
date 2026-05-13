@@ -1,0 +1,11 @@
+---
+title: "Shipped projects section with fine-line SVG mockups"
+date: "2026-05-04"
+week: "W18"
+tags: ["portfolio", "svg", "ffmpeg"]
+excerpt: "Built phone + browser mockups in fine-line SVG, matching the noir aesthetic of the rest of the site. Compressed a 37MB demo to under 5MB with ffmpeg-static — no native install needed."
+---
+
+The phone outline + browser frame are pure SVG with fine strokes and gold corner accents. Each one wraps an autoplaying muted video that pauses when out of viewport.
+
+The video compression was the tricky part — ffmpeg wouldn't install via Homebrew on this Intel Mac (Tier 2 config), so I used the npm `@ffmpeg-installer/ffmpeg` binary instead. 37MB → 4.9MB, no quality loss noticeable at the mockup size.

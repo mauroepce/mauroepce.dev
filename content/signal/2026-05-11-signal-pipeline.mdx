@@ -1,0 +1,11 @@
+---
+title: "Got the Signal pipeline working"
+date: "2026-05-11"
+week: "W19"
+tags: ["meta", "mdx"]
+excerpt: "MDX pipeline now reads markdown from content/signal/. Push from VSCode → Vercel redeploys → post goes live. No CMS, no admin panel, no auth. Just files."
+---
+
+The Signal pipeline reads MDX files at build time using `gray-matter` for frontmatter. Each push to GitHub triggers a Vercel redeploy.
+
+Adding an entry is as simple as creating a new file in `content/signal/`.

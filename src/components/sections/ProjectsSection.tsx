@@ -1,0 +1,217 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import GlitchText from "@/components/ui/GlitchText";
+import PhoneMockup from "@/components/ui/PhoneMockup";
+import BrowserMockup from "@/components/ui/BrowserMockup";
+
+type Project = {
+  number: string;
+  title: string;
+  badge: string | null;
+  description: string;
+  tags: string[];
+  github: string | null;
+  live: string | null;
+  appStore: string | null;
+  playStore: string | null;
+  year: string;
+  video: string | null;
+  mockup: "phone" | "browser" | null;
+  url?: string;
+};
+
+const projects: Project[] = [
+  {
+    number: "01",
+    title: "Chile Travel",
+    badge: "Live · Gov",
+    description:
+      "Production iOS/Android app commissioned by Chile's National Tourism Service (SERNATUR). Coordinates three separate codebases — React Native, Firebase Cloud Functions, and WordPress — sharing session and favorites state in real time. The hardest part: bidirectional sync with timestamp-based anti-loop guards, and a 3-level geo-normalized cache (coordinates quantized to ~1.1km cells) that returns list data in under 50ms — no dedicated caching infrastructure.",
+    tags: ["React Native", "TypeScript", "Firebase", "Elasticsearch", "Expo", "WordPress", "Google Maps API", "EAS"],
+    appStore: "#",
+    playStore: "#",
+    github: null,
+    live: null,
+    year: "2025",
+    video: "/videos/chile-travel.mp4",
+    mockup: "phone",
+  },
+  {
+    number: "02",
+    title: "Honorarios.cl",
+    badge: "Live",
+    description:
+      "Tax-retention calculator and invoice tracker for Chilean devs paid in USD by foreign companies. Built on Next.js 15 + Supabase + Lemon Squeezy (Merchant of Record — no LLC needed), with idempotent webhooks, scheduled email reminders via Resend, and server-rendered React mockups instead of screenshots — so marketing visuals never drift from production. The hardest part: intent preservation through the full auth flow — calculator → localStorage draft → email confirmation → checkout → prefilled invoice form, no state lost. One of several MVPs from kindtools.co, my personal validation lab where ideas live or die in 14 days.",
+    tags: ["Next.js 15", "TypeScript", "Supabase", "Lemon Squeezy", "Resend", "PostHog", "Tailwind", "Vercel Edge"],
+    github: null,
+    live: "https://honorarios-cl.kindtools.co/",
+    appStore: null,
+    playStore: null,
+    year: "2026",
+    video: "/videos/honorarios-cl.mp4",
+    mockup: "browser",
+    url: "honorarios-cl.kindtools.co",
+  },
+  {
+    number: "03",
+    title: "Clacebox",
+    badge: "Beta",
+    description:
+      "Specialty coffee subscription platform for Ecuador's market. Built on Next.js 16 with the payment provider isolated behind a Strategy interface — Lemon Squeezy runs as Merchant of Record in production, but swappable without touching checkout or order code (evaluated Stripe, MercadoPago, Kushki, PayPal first). Webhook handler is idempotent at the request level: HMAC signature persisted in a WebhookEvent table dedupes retries, timingSafeEqual guards comparison, every handler enforces valid state transitions — PENDING → SUCCESS, never overwrites. Auth via Supabase PKCE with Google OAuth and a Postgres trigger syncing auth.users to the application User table on signup.",
+    tags: ["Next.js 16", "React 19", "TypeScript", "Prisma 7", "Supabase", "Tailwind 4", "shadcn/ui", "Lemon Squeezy", "Resend", "Vercel"],
+    github: null,
+    live: "https://clacebox.com/",
+    appStore: null,
+    playStore: null,
+    year: "2026",
+    video: "/videos/clacebox.mp4",
+    mockup: "browser",
+    url: "clacebox.com",
+  },
+];
+
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  const links = [
+    project.github && { label: "GitHub", href: project.github },
+    project.live && { label: "Live", href: project.live },
+    project.appStore && { label: "App Store", href: project.appStore },
+    project.playStore && { label: "Google Play", href: project.playStore },
+  ].filter(Boolean) as { label: string; href: string }[];
+
+  const hasMockup = project.mockup !== null;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.15 }}
+      className="group relative border-t border-foreground/8 py-12 hover:border-foreground/18 transition-colors"
+    >
+      <div
+        className={`flex flex-col gap-10 ${
+          hasMockup
+            ? "lg:flex-row lg:items-center lg:gap-16"
+            : "md:flex-row md:items-start md:gap-14"
+        }`}
+      >
+        {/* Number — hidden when mockup present on desktop */}
+        <span
+          className={`text-7xl font-serif italic text-foreground/6 group-hover:text-foreground/10 transition-colors leading-none shrink-0 select-none ${
+            hasMockup ? "lg:hidden" : ""
+          }`}
+        >
+          {project.number}
+        </span>
+
+        {/* Content */}
+        <div className="flex-1 space-y-4 min-w-0">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3 flex-wrap">
+              <h3 className="font-serif text-3xl md:text-4xl text-foreground">
+                <GlitchText text={project.title} />
+              </h3>
+              {project.badge && (
+                <span className="text-[10px] font-mono tracking-widest uppercase text-[#C9A84C]/70 border border-[#C9A84C]/25 px-2 py-0.5 self-center">
+                  {project.badge}
+                </span>
+              )}
+            </div>
+            <span className="text-xs font-mono text-foreground/18 shrink-0 mt-2">
+              {project.year}
+            </span>
+          </div>
+
+          <p className="text-sm font-mono text-foreground/38 leading-loose max-w-xl">
+            {project.description}
+          </p>
+
+          {/* Tags */}
+          {project.tags.length > 0 && (
+            <div className="flex flex-wrap gap-3 pt-1">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[10px] font-mono text-foreground/25 tracking-wider uppercase"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Links */}
+          {links.length > 0 && (
+            <div className="flex items-center gap-6 pt-3 flex-wrap">
+              {links.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono tracking-widest uppercase text-foreground/28 hover:text-foreground/70 transition-colors flex items-center gap-2"
+                >
+                  {link.label} <span className="text-[#C9A84C]/45">↗</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Mockup */}
+        {project.mockup === "phone" && (
+          <div className="shrink-0 flex justify-center lg:justify-end">
+            <PhoneMockup src={project.video ?? ""} />
+          </div>
+        )}
+        {project.mockup === "browser" && (
+          <div className="shrink-0 flex justify-center lg:justify-end w-full lg:w-auto">
+            <BrowserMockup src={project.video} url={project.url} />
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+export default function ProjectsSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section id="projects" className="px-8 md:px-16 lg:px-24 py-32">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+        className="mb-16"
+      >
+        <p className="text-foreground/20 text-xs font-mono tracking-[0.4em] mb-3">
+          / 02
+        </p>
+        <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
+          Projects
+        </h2>
+        <div className="mt-5 h-px w-12 bg-[#C9A84C]/40" />
+      </motion.div>
+
+      <div>
+        {projects.map((project, i) => (
+          <ProjectCard key={project.number} project={project} index={i} />
+        ))}
+      </div>
+    </section>
+  );
+}
