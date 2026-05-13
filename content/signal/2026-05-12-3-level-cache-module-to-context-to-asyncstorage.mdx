@@ -1,0 +1,94 @@
+---
+title: "3-level cache: module to context to AsyncStorage"
+date: "2026-05-12"
+week: "W20"
+tags: ["chiletravel", "architecture", "caching", "performance"]
+excerpt: "Sub-50ms list reads on returning users without dedicated caching infrastructure. Three tiers, each surviving a different lifecycle event: component unmount, screen navigation, and full app cold start."
+---
+
+## The problem
+
+Returning users hitting a list screen wait 2-3 seconds for the same data they saw 30 seconds ago. The Cloud Function call is fast (~400ms) but the perceived round trip — Firestore query, deserialization, image prefetch, render — adds up. A single cache layer doesn't cover every case: AsyncStorage survives cold starts but pays ~50ms disk reads on every hit; React Context survives navigation but dies when the JS bundle reloads; a local component variable dies on unmount.
+
+Three tiers, each tuned to a different lifecycle.
+
+## The three tiers
+
+```javascript
+// src/screens/V2/Single/SingleListContent.js:34
+const _moduleCache = {};
+
+// src/contexts/AppProvider.js:62
+const [categoryListCache, setCategoryListCache] = useState({});
+
+// src/utils/cacheHelper.js — wraps AsyncStorage with TTL
+```
+
+- **Tier 1 — module variable.** Declared outside the React component. Survives `unmount` because it lives in the module closure, not the component tree. ~1ms reads. Empty on cold start.
+- **Tier 2 — React Context.** State in `AppProvider`. Survives screen navigation across the whole app tree. ~5ms reads. Dies when the JS bundle reloads.
+- **Tier 3 — AsyncStorage.** Persists across app restarts. ~50ms reads. The only tier that survives a cold start.
+
+## Read path
+
+```javascript
+// src/screens/V2/Single/SingleListContent.js:82-86
+const baseCategoryKey =
+  typeOfContent === 'unlosable' ? 'unlosable' :
+  typeOfContent === 'service'   ? 'services'  :
+                                  'experiences';
+
+const cached = _moduleCache[categoryKey] || categoryListCache[categoryKey];
+```
+
+Module first, Context as backup. If both miss, fall through to AsyncStorage via `getCache(key, ttl)`. Final miss hits the Cloud Function. The non-obvious detail: on a disk hit, promote upward — write back to the module map and context so the next read in the same session is instant.
+
+## Geo-normalized keys
+
+A naïve key like `list_unlosable` breaks the moment the user changes location: cached data from Santiago bleeds into the Valparaíso view. Solution at `src/utils/cacheHelper.js:20-25`:
+
+```javascript
+export const getLocationCacheKey = (baseKey, location) => {
+  if (!location?.coords) return baseKey;
+  const lat = Math.round(location.coords.latitude * 100) / 100;
+  const lon = Math.round(location.coords.longitude * 100) / 100;
+  return `${baseKey}_${lat}_${lon}`;
+};
+```
+
+Round to 2 decimals. Coordinates collapse into ~1.1km grid cells. Moving 200m within a neighborhood reuses the same cache entry. Moving across town generates a new key, so the previous geography's data stays cached but isn't served. Cache invalidates by movement, not by clock.
+
+## TTL with timestamp stamping
+
+```javascript
+// src/utils/cacheHelper.js:33-46
+export const getCache = async (key, ttl = CACHE_TTL.HOME_DATA) => {
+  try {
+    const cached = await AsyncStorage.getItem(key);
+    if (cached) {
+      const { data, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp < ttl) {
+        return data;
+      }
+    }
+  } catch (error) {
+    console.error("CACHE: Error leyendo", key, error.message);
+  }
+  return null;
+};
+```
+
+Each entry stamps `timestamp`. Reads compare against TTL. Stale entries return `null` and trigger a re-fetch. Service detail uses a separate TTL. The disk cleanup pass at `cleanExpiredCache` (lines 109-130) purges entries older than 30 minutes during idle moments.
+
+## What this buys
+
+| Scenario | Latency |
+|---|---|
+| First visit (cold) | ~1500ms |
+| Same-session re-entry | ~1ms (module hit) |
+| Different tab and back | ~5ms (context hit) |
+| App killed and reopened | ~50ms (disk hit) |
+| Moved >1km | ~1500ms (key changed, miss) |
+
+No Redis. No service worker. No SWR library. Three primitives — a module-scoped object, `useState`, AsyncStorage — composed to give returning users a perceived-instant app.
+
+The transferable idea: cache layers are not redundant when each survives a different lifecycle event. Stack them in order of speed, promote upward on lower-tier hits, and key by whatever invalidates the data semantically — in this case, the user's grid cell, not a timer.
