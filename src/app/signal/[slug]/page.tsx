@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import {
   getSignalEntry,
   getSignalEntries,
@@ -111,6 +112,11 @@ export default async function SignalEntryPage({
               <MDXRemote
                 source={entry.content}
                 components={mdxComponents}
+                options={{
+                  mdxOptions: {
+                    remarkPlugins: [remarkGfm],
+                  },
+                }}
               />
             </div>
           ) : (

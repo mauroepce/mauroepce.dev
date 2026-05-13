@@ -85,4 +85,24 @@ export const mdxComponents: MDXComponents = {
       className="my-8 border border-foreground/10 rounded-sm max-w-full"
     />
   ),
+  table: ({ children }: { children?: ReactNode }) => (
+    <div className="my-8 max-w-3xl overflow-x-auto border border-foreground/10 rounded-sm">
+      <table className="w-full text-xs font-mono border-collapse">{children}</table>
+    </div>
+  ),
+  thead: ({ children }: { children?: ReactNode }) => (
+    <thead className="bg-foreground/[0.04] border-b border-foreground/10">{children}</thead>
+  ),
+  tbody: ({ children }: { children?: ReactNode }) => <tbody>{children}</tbody>,
+  tr: ({ children }: { children?: ReactNode }) => (
+    <tr className="border-b border-foreground/6 last:border-b-0">{children}</tr>
+  ),
+  th: ({ children }: { children?: ReactNode }) => (
+    <th className="px-4 py-3 text-left text-[10px] font-mono tracking-[0.2em] uppercase text-[#C9A84C]/70 font-normal">
+      {children}
+    </th>
+  ),
+  td: ({ children }: { children?: ReactNode }) => (
+    <td className="px-4 py-3 text-foreground/60 leading-relaxed align-top">{children}</td>
+  ),
 };
