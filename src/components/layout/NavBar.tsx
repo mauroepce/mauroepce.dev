@@ -45,7 +45,7 @@ export default function NavBar() {
           />
           <GlitchText
             text="mauroepce"
-            className="text-xs font-mono tracking-[0.25em] text-foreground/40 group-hover:text-foreground/70 transition-colors cursor-pointer"
+            className="text-xs font-mono tracking-[0.25em] text-foreground/65 group-hover:text-foreground/90 transition-colors cursor-pointer"
           />
         </Link>
 
@@ -54,7 +54,7 @@ export default function NavBar() {
             <a
               key={link.href}
               href={link.href}
-              className="ink-underline text-xs font-mono tracking-widest text-foreground/35 hover:text-foreground/80 transition-colors uppercase"
+              className="ink-underline text-xs font-mono tracking-widest text-foreground/65 hover:text-foreground/95 transition-colors uppercase"
             >
               {link.label}
             </a>
@@ -68,9 +68,9 @@ export default function NavBar() {
           aria-expanded={open}
           className="md:hidden flex flex-col items-end justify-center gap-1.5 w-11 h-11 -mr-2 group"
         >
-          <span className="block h-px w-6 bg-foreground/45 group-hover:bg-foreground/85 transition-colors" />
-          <span className="block h-px w-5 bg-foreground/45 group-hover:bg-foreground/85 transition-colors" />
-          <span className="block h-px w-6 bg-foreground/45 group-hover:bg-foreground/85 transition-colors" />
+          <span className="block h-px w-6 bg-foreground/65 group-hover:bg-foreground/95 transition-colors" />
+          <span className="block h-px w-5 bg-foreground/65 group-hover:bg-foreground/95 transition-colors" />
+          <span className="block h-px w-6 bg-foreground/65 group-hover:bg-foreground/95 transition-colors" />
         </button>
       </motion.header>
 
@@ -94,7 +94,7 @@ export default function NavBar() {
             >
               <div className="flex items-center gap-3">
                 <SigilA size={22} className="text-foreground/55" />
-                <span className="text-xs font-mono tracking-[0.25em] text-foreground/45 uppercase">
+                <span className="text-xs font-mono tracking-[0.25em] text-foreground/70 uppercase">
                   Index
                 </span>
               </div>
@@ -102,7 +102,7 @@ export default function NavBar() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
-                className="text-xs font-mono tracking-[0.25em] text-foreground/40 hover:text-foreground/80 transition-colors uppercase py-2 pl-3 -mr-2 flex items-center gap-2"
+                className="text-xs font-mono tracking-[0.25em] text-foreground/65 hover:text-foreground/95 transition-colors uppercase py-2 pl-3 -mr-2 flex items-center gap-2"
               >
                 close <span className="text-base leading-none">×</span>
               </button>
@@ -124,7 +124,7 @@ export default function NavBar() {
                   className="group flex items-center justify-between py-6 border-b border-foreground/8 active:bg-foreground/3 transition-colors"
                 >
                   <div className="flex items-baseline gap-5">
-                    <span className="text-[10px] font-mono tracking-[0.3em] text-foreground/22 uppercase">
+                    <span className="text-[10px] font-mono tracking-[0.3em] text-foreground/55 uppercase">
                       / {link.number}
                     </span>
                     <span className="font-serif italic text-4xl text-foreground/80 group-hover:text-foreground transition-colors">

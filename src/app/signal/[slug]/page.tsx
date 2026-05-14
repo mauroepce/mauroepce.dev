@@ -62,21 +62,21 @@ export default async function SignalEntryPage({
           {/* Back link */}
           <Link
             href="/#signal"
-            className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-foreground/30 hover:text-foreground/70 transition-colors mb-16"
+            className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-foreground/55 hover:text-foreground/90 transition-colors mb-16"
           >
-            <span className="text-[#C9A84C]/50">←</span> Signal
+            <span className="text-[#C9A84C]/70">←</span> Signal
           </Link>
 
           {/* Header */}
           <header className="mb-16">
             <div className="flex items-center gap-4 mb-6">
-              <p className="text-[10px] font-mono tracking-wider text-foreground/30">
+              <p className="text-[10px] font-mono tracking-wider text-foreground/55">
                 {formatSignalDateLong(entry.date)}
               </p>
               {entry.week && (
                 <>
-                  <span className="text-foreground/15">·</span>
-                  <p className="text-[10px] font-mono tracking-wider text-[#C9A84C]/50">
+                  <span className="text-foreground/35">·</span>
+                  <p className="text-[10px] font-mono tracking-wider text-[#C9A84C]/70">
                     {entry.week}
                   </p>
                 </>
@@ -87,7 +87,7 @@ export default async function SignalEntryPage({
               {entry.title}
             </h1>
 
-            <p className="text-base font-mono text-foreground/45 leading-relaxed max-w-2xl">
+            <p className="text-base font-mono text-foreground/65 leading-relaxed max-w-2xl">
               {entry.excerpt}
             </p>
 
@@ -96,7 +96,7 @@ export default async function SignalEntryPage({
                 {entry.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] font-mono text-foreground/30 tracking-wider"
+                    className="text-[10px] font-mono text-foreground/55 tracking-wider"
                   >
                     #{tag}
                   </span>
@@ -104,7 +104,7 @@ export default async function SignalEntryPage({
               </div>
             )}
 
-            <div className="mt-10 h-px w-12 bg-[#C9A84C]/40" />
+            <div className="mt-10 h-px w-12 bg-[#C9A84C]/65" />
           </header>
 
           {/* Body */}
@@ -121,26 +121,26 @@ export default async function SignalEntryPage({
               />
             </div>
           ) : (
-            <p className="text-sm font-mono text-foreground/25 italic">
+            <p className="text-sm font-mono text-foreground/55 italic">
               (No additional detail for this entry.)
             </p>
           )}
 
           {/* Prev / Next navigation */}
           {(newer || older) && (
-            <nav className="mt-24 pt-12 border-t border-foreground/8 grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/8">
+            <nav className="mt-24 pt-12 border-t border-foreground/25 grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/25">
               {older ? (
                 <Link
                   href={`/signal/${older.slug}`}
                   className="group block bg-background hover:bg-foreground/[0.02] transition-colors p-6"
                 >
-                  <p className="text-[10px] font-mono tracking-[0.35em] text-foreground/30 uppercase mb-3">
-                    <span className="text-[#C9A84C]/50">←</span> Older
+                  <p className="text-[10px] font-mono tracking-[0.35em] text-foreground/55 uppercase mb-3">
+                    <span className="text-[#C9A84C]/70">←</span> Older
                   </p>
-                  <p className="text-[10px] font-mono text-foreground/25 tracking-wider mb-1">
+                  <p className="text-[10px] font-mono text-foreground/55 tracking-wider mb-1">
                     {formatSignalDate(older.date)} · {older.week}
                   </p>
-                  <h3 className="font-serif text-xl text-foreground/70 group-hover:text-foreground transition-colors leading-snug">
+                  <h3 className="font-serif text-xl text-foreground/85 group-hover:text-foreground transition-colors leading-snug">
                     {older.title}
                   </h3>
                 </Link>
@@ -152,13 +152,13 @@ export default async function SignalEntryPage({
                   href={`/signal/${newer.slug}`}
                   className="group block bg-background hover:bg-foreground/[0.02] transition-colors p-6 md:text-right"
                 >
-                  <p className="text-[10px] font-mono tracking-[0.35em] text-foreground/30 uppercase mb-3">
-                    Newer <span className="text-[#C9A84C]/50">→</span>
+                  <p className="text-[10px] font-mono tracking-[0.35em] text-foreground/55 uppercase mb-3">
+                    Newer <span className="text-[#C9A84C]/70">→</span>
                   </p>
-                  <p className="text-[10px] font-mono text-foreground/25 tracking-wider mb-1">
+                  <p className="text-[10px] font-mono text-foreground/55 tracking-wider mb-1">
                     {formatSignalDate(newer.date)} · {newer.week}
                   </p>
-                  <h3 className="font-serif text-xl text-foreground/70 group-hover:text-foreground transition-colors leading-snug">
+                  <h3 className="font-serif text-xl text-foreground/85 group-hover:text-foreground transition-colors leading-snug">
                     {newer.title}
                   </h3>
                 </Link>
@@ -172,35 +172,35 @@ export default async function SignalEntryPage({
           {otherEntries.length > 0 && (
             <section className="mt-20">
               <div className="flex items-center gap-4 mb-8">
-                <p className="text-[10px] font-mono tracking-[0.4em] text-foreground/30 uppercase">
+                <p className="text-[10px] font-mono tracking-[0.4em] text-foreground/55 uppercase">
                   More from Signal
                 </p>
-                <div className="flex-1 h-px bg-foreground/8" />
+                <div className="flex-1 h-px bg-foreground/25" />
               </div>
               <div className="space-y-px">
                 {otherEntries.map((other) => (
                   <Link
                     key={other.slug}
                     href={`/signal/${other.slug}`}
-                    className="group flex items-start gap-6 py-5 border-b border-foreground/6 hover:border-foreground/15 transition-colors"
+                    className="group flex items-start gap-6 py-5 border-b border-foreground/25 hover:border-foreground/40 transition-colors"
                   >
                     <div className="shrink-0 pt-1 w-20 text-right">
-                      <p className="text-[10px] font-mono text-foreground/22 tracking-wider">
+                      <p className="text-[10px] font-mono text-foreground/55 tracking-wider">
                         {formatSignalDate(other.date)}
                       </p>
-                      <p className="text-[10px] font-mono text-[#C9A84C]/40 tracking-wider">
+                      <p className="text-[10px] font-mono text-[#C9A84C]/65 tracking-wider">
                         {other.week}
                       </p>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-serif text-lg text-foreground/70 group-hover:text-foreground transition-colors leading-snug">
+                      <h4 className="font-serif text-lg text-foreground/85 group-hover:text-foreground transition-colors leading-snug">
                         {other.title}
                       </h4>
-                      <p className="text-xs font-mono text-foreground/30 leading-relaxed mt-1 line-clamp-2">
+                      <p className="text-xs font-mono text-foreground/55 leading-relaxed mt-1 line-clamp-2">
                         {other.excerpt}
                       </p>
                     </div>
-                    <span className="shrink-0 text-[#C9A84C]/30 group-hover:text-[#C9A84C]/70 transition-colors pt-2">
+                    <span className="shrink-0 text-[#C9A84C]/60 group-hover:text-[#C9A84C]/70 transition-colors pt-2">
                       →
                     </span>
                   </Link>
@@ -213,21 +213,21 @@ export default async function SignalEntryPage({
           <div className="mt-20 flex justify-center">
             <Link
               href="/#signal"
-              className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-foreground/30 hover:text-foreground/70 transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-foreground/55 hover:text-foreground/90 transition-colors"
             >
-              <span className="text-[#C9A84C]/50">←</span> All signals
+              <span className="text-[#C9A84C]/70">←</span> All signals
             </Link>
           </div>
         </article>
       </main>
       <footer className="border-t border-border/40 py-6 px-8 md:px-16 lg:px-24 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <SigilA size={16} className="text-foreground/25" />
-          <span className="text-xs font-mono text-foreground/18 tracking-widest">
+          <SigilA size={16} className="text-foreground/55" />
+          <span className="text-xs font-mono text-foreground/55 tracking-widest">
             mauroepce
           </span>
         </div>
-        <span className="text-xs font-mono text-foreground/18 tracking-widest">
+        <span className="text-xs font-mono text-foreground/55 tracking-widest">
           © 2026
         </span>
       </footer>

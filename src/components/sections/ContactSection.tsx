@@ -35,13 +35,13 @@ export default function ContactSection() {
         transition={{ duration: 0.6 }}
         className="mb-16"
       >
-        <p className="text-foreground/20 text-xs font-mono tracking-[0.4em] mb-3">
+        <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
           / 04
         </p>
         <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
           Let&apos;s build.
         </h2>
-        <div className="mt-5 h-px w-12 bg-[#C9A84C]/40" />
+        <div className="mt-5 h-px w-12 bg-[#C9A84C]/65" />
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -52,7 +52,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-sm font-mono text-foreground/38 leading-loose"
+            className="text-sm font-mono text-foreground/65 leading-loose"
           >
             Open for remote freelance worldwide.
             <br />
@@ -66,7 +66,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xs font-mono text-foreground/18 tracking-widest uppercase"
+            className="text-xs font-mono text-foreground/55 tracking-widest uppercase"
           >
             Based in Colombia · Available worldwide
           </motion.p>
@@ -84,16 +84,16 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 py-4 border-b border-foreground/8 hover:border-foreground/20 transition-all"
+              className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 py-4 border-b border-foreground/20 hover:border-foreground/45 transition-all"
             >
-              <span className="text-[10px] font-mono tracking-[0.35em] text-foreground/22 uppercase sm:w-20 shrink-0">
+              <span className="text-[10px] font-mono tracking-[0.35em] text-foreground/55 uppercase sm:w-20 shrink-0">
                 {link.label}
               </span>
               <GlitchText
                 text={link.value}
-                className="text-xs font-mono text-foreground/38 group-hover:text-foreground/75 transition-colors break-all sm:break-normal sm:flex-1 sm:text-right"
+                className="text-xs font-mono text-foreground/70 group-hover:text-foreground/95 transition-colors break-all sm:break-normal sm:flex-1 sm:text-right"
               />
-              <span className="hidden sm:inline text-[#C9A84C]/28 group-hover:text-[#C9A84C]/65 transition-colors text-sm shrink-0">
+              <span className="hidden sm:inline text-[#C9A84C]/55 group-hover:text-[#C9A84C]/85 transition-colors text-sm shrink-0">
                 ↗
               </span>
             </motion.a>

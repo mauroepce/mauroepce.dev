@@ -47,13 +47,13 @@ export default function AboutSection() {
       <Marginalia text="same hand, three crafts" position="top-right" rotate={2} />
       <FadeIn>
         <div className="mb-16">
-          <p className="text-foreground/20 text-xs font-mono tracking-[0.4em] mb-3">
+          <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
             / 01
           </p>
           <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
             About
           </h2>
-          <div className="mt-5 h-px w-12 bg-[#C9A84C]/40" />
+          <div className="mt-5 h-px w-12 bg-[#C9A84C]/65" />
         </div>
       </FadeIn>
 
@@ -61,7 +61,7 @@ export default function AboutSection() {
         {/* Left: Text */}
         <div className="space-y-6">
           <FadeIn delay={0.1}>
-            <p className="text-sm font-mono text-foreground/50 leading-loose">
+            <p className="text-sm font-mono text-foreground/65 leading-loose">
               I work across three disciplines that share one thing — a line
               drawn with intent. Software systems, drawing, fine line tattoo
               on synthetic skin. The art isn&apos;t a hobby of the
@@ -70,7 +70,7 @@ export default function AboutSection() {
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p className="text-sm font-mono text-foreground/50 leading-loose">
+            <p className="text-sm font-mono text-foreground/65 leading-loose">
               Seven years writing production code. Currently full-stack at
               TeselaGen Biotechnology (California, remote), consulting through
               Saargo. Before that I founded Birdi — a marketplace startup
@@ -80,7 +80,7 @@ export default function AboutSection() {
             </p>
           </FadeIn>
           <FadeIn delay={0.3}>
-            <p className="text-sm font-mono text-foreground/50 leading-loose">
+            <p className="text-sm font-mono text-foreground/65 leading-loose">
               I work best with teams that care about what they build.
               Open for remote freelance worldwide.
             </p>
@@ -88,14 +88,14 @@ export default function AboutSection() {
 
           <FadeIn delay={0.4}>
             <div className="pt-4">
-              <p className="text-[10px] font-mono tracking-[0.4em] text-foreground/20 uppercase mb-4">
+              <p className="text-[10px] font-mono tracking-[0.4em] text-foreground/50 uppercase mb-4">
                 Stack
               </p>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
                   <span
                     key={skill}
-                    className="text-xs font-mono text-foreground/35 border border-foreground/8 px-3 py-1 hover:border-[#C9A84C]/30 hover:text-foreground/65 transition-all"
+                    className="text-xs font-mono text-foreground/65 border border-foreground/25 px-3 py-1 hover:border-[#C9A84C]/50 hover:text-foreground/90 transition-all"
                   >
                     {skill}
                   </span>
@@ -164,15 +164,15 @@ export default function AboutSection() {
 
               {/* Overlay labels */}
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
-                <p className="text-[10px] font-mono text-foreground/18 tracking-[0.35em]">
+                <p className="text-[10px] font-mono text-foreground/55 tracking-[0.35em]">
                   DEV
                 </p>
-                <div className="w-px h-6 bg-foreground/8" />
-                <p className="text-[10px] font-mono text-[#C9A84C]/35 tracking-[0.35em]">
+                <div className="w-px h-6 bg-foreground/25" />
+                <p className="text-[10px] font-mono text-[#C9A84C]/70 tracking-[0.35em]">
                   ART
                 </p>
-                <div className="w-px h-6 bg-foreground/8" />
-                <p className="text-[10px] font-mono text-foreground/18 tracking-[0.35em]">
+                <div className="w-px h-6 bg-foreground/25" />
+                <p className="text-[10px] font-mono text-foreground/55 tracking-[0.35em]">
                   INK
                 </p>
               </div>

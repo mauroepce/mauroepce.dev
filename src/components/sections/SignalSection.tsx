@@ -32,25 +32,25 @@ function SignalEntryItem({
     >
       <Link
         href={`/signal/${entry.slug}`}
-        className="group block py-10 border-b border-foreground/8 hover:border-foreground/18 transition-colors relative"
+        className="group block py-10 border-b border-foreground/20 hover:border-foreground/40 transition-colors relative"
       >
         <article className="flex flex-col md:flex-row gap-5 md:gap-12">
           {/* Date stamp — corner of a journal page */}
           <div className="shrink-0 w-28 relative self-start">
-            <div className="border border-foreground/15 group-hover:border-[#C9A84C]/40 transition-colors p-3 bg-[#0a0a0a]/40">
-              <p className="text-[9px] font-mono text-foreground/40 tracking-[0.2em] uppercase mb-1">
+            <div className="border border-foreground/35 group-hover:border-[#C9A84C]/65 transition-colors p-3 bg-[#0a0a0a]/40">
+              <p className="text-[9px] font-mono text-foreground/65 tracking-[0.2em] uppercase mb-1">
                 {formatDate(entry.date)}
               </p>
-              <div className="h-px w-6 bg-foreground/15 mb-1" />
+              <div className="h-px w-6 bg-foreground/35 mb-1" />
               <p
-                className="text-2xl text-[#C9A84C]/65 leading-none"
+                className="text-2xl text-[#C9A84C]/80 leading-none"
                 style={{ fontFamily: "var(--font-handwritten)" }}
               >
                 {entry.week}
               </p>
             </div>
             {/* Decorative pin mark */}
-            <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#C9A84C]/40 group-hover:bg-[#C9A84C]/80 transition-colors" />
+            <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#C9A84C]/65 group-hover:bg-[#C9A84C]/80 transition-colors" />
           </div>
 
           {/* Journal page content */}
@@ -64,7 +64,7 @@ function SignalEntryItem({
               </span>
             </div>
             <p
-              className="text-base text-foreground/45 leading-relaxed group-hover:text-foreground/65 transition-colors max-w-2xl"
+              className="text-base text-foreground/65 leading-relaxed group-hover:text-foreground/85 transition-colors max-w-2xl"
               style={{ fontFamily: "var(--font-handwritten)" }}
             >
               {entry.excerpt}
@@ -74,7 +74,7 @@ function SignalEntryItem({
                 {entry.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] font-mono text-foreground/25 tracking-wider"
+                    className="text-[10px] font-mono text-foreground/55 tracking-wider"
                   >
                     #{tag}
                   </span>
@@ -110,14 +110,14 @@ export default function SignalSection({ entries }: SignalSectionProps) {
         transition={{ duration: 0.6 }}
         className="mb-16"
       >
-        <p className="text-foreground/20 text-xs font-mono tracking-[0.4em] mb-3">
+        <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
           / 03
         </p>
         <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
           Signal
         </h2>
-        <div className="mt-5 h-px w-12 bg-[#C9A84C]/40" />
-        <p className="mt-6 text-xs font-mono text-foreground/22 tracking-wide max-w-sm leading-loose">
+        <div className="mt-5 h-px w-12 bg-[#C9A84C]/65" />
+        <p className="mt-6 text-xs font-mono text-foreground/55 tracking-wide max-w-sm leading-loose">
           Things I&apos;m learning. Features I shipped. Ideas I&apos;m working
           through. Updated from VSCode — no CMS, just markdown pushed to GitHub.
         </p>
@@ -130,7 +130,7 @@ export default function SignalSection({ entries }: SignalSectionProps) {
           ))}
         </div>
       ) : (
-        <p className="text-xs font-mono text-foreground/25 italic">
+        <p className="text-xs font-mono text-foreground/55 italic">
           No entries yet. Add a file to content/signal/ to start.
         </p>
       )}
@@ -140,12 +140,12 @@ export default function SignalSection({ entries }: SignalSectionProps) {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="mt-16 border border-foreground/6 p-5 md:p-6 overflow-x-auto"
+        className="mt-16 border border-foreground/20 p-5 md:p-6 overflow-x-auto"
       >
-        <p className="text-[10px] font-mono tracking-[0.4em] text-foreground/18 uppercase mb-4">
+        <p className="text-[10px] font-mono tracking-[0.4em] text-foreground/50 uppercase mb-4">
           How to post from VSCode
         </p>
-        <pre className="text-[11px] md:text-xs font-mono text-foreground/28 leading-relaxed whitespace-pre-wrap wrap-break-word">
+        <pre className="text-[11px] md:text-xs font-mono text-foreground/60 leading-relaxed whitespace-pre-wrap wrap-break-word">
           {`# 1. Create a file:
 content/signal/2026-05-18-your-slug.mdx
 

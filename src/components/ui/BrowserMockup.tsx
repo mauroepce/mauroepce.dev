@@ -167,11 +167,11 @@ export default function BrowserMockup({
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-[#0a0a0a]">
               <div className="text-center space-y-3">
-                <div className="w-10 h-px bg-[#C9A84C]/40 mx-auto" />
+                <div className="w-10 h-px bg-[#C9A84C]/65 mx-auto" />
                 <p className="text-[9px] font-mono tracking-[0.4em] text-foreground/35 uppercase">
                   preview · soon
                 </p>
-                <div className="w-10 h-px bg-[#C9A84C]/40 mx-auto" />
+                <div className="w-10 h-px bg-[#C9A84C]/65 mx-auto" />
               </div>
             </div>
           )}

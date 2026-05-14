@@ -36,15 +36,15 @@ export default function Marginalia({
     <motion.span
       ref={ref}
       initial={{ opacity: 0 }}
-      animate={inView ? { opacity: 0.35 } : {}}
-      whileHover={{ opacity: 0.9, scale: 1.02 }}
+      animate={inView ? { opacity: 0.55 } : {}}
+      whileHover={{ opacity: 1, scale: 1.02 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       style={{
         fontFamily: "var(--font-handwritten)",
         transform: `rotate(${rotate}deg)`,
         transformOrigin: "left center",
       }}
-      className={`block md:absolute ${POSITIONS[position]} mb-6 md:mb-0 pointer-events-auto text-[#C9A84C]/55 text-base md:text-lg italic tracking-wide select-none cursor-default max-w-full md:max-w-55 leading-tight ${className}`}
+      className={`block md:absolute ${POSITIONS[position]} mb-6 md:mb-0 pointer-events-auto text-[#C9A84C]/80 text-base md:text-lg italic tracking-wide select-none cursor-default max-w-full md:max-w-55 leading-tight ${className}`}
     >
       — {text}
     </motion.span>

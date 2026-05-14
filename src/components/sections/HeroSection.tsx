@@ -82,7 +82,7 @@ export default function HeroSection() {
           className="mb-6 flex items-center gap-2"
         >
           <span className="text-[#C9A84C]/60 text-xs font-mono">{">"}</span>
-          <span className="text-sm font-mono text-foreground/40 min-w-55">
+          <span className="text-sm font-mono text-foreground/55 min-w-55">
             {role}
             <span className="animate-pulse ml-0.5">_</span>
           </span>
@@ -107,7 +107,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.6 }}
-          className="text-xs font-mono tracking-[0.3em] text-foreground/22 mb-10 italic"
+          className="text-xs font-mono tracking-[0.3em] text-foreground/55 mb-10 italic"
         >
           — the same hand.
         </motion.p>
@@ -117,7 +117,7 @@ export default function HeroSection() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 1.0, duration: 0.8 }}
-          className="w-14 h-px bg-[#C9A84C]/40 mb-10 origin-left"
+          className="w-14 h-px bg-[#C9A84C]/65 mb-10 origin-left"
         />
 
         {/* Description */}
@@ -125,7 +125,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1 }}
-          className="text-sm font-mono text-foreground/35 mb-10 max-w-md leading-loose"
+          className="text-sm font-mono text-foreground/60 mb-10 max-w-md leading-loose"
         >
           Software systems. Drawing. Fine line tattoo.
           <br />
@@ -145,16 +145,16 @@ export default function HeroSection() {
         >
           <a
             href="#projects"
-            className="text-xs font-mono tracking-widest uppercase text-foreground/70 border border-foreground/15 px-6 py-3 hover:border-[#C9A84C]/50 hover:text-[#C9A84C]/80 transition-all duration-300"
+            className="text-xs font-mono tracking-widest uppercase text-foreground/85 border border-foreground/30 px-6 py-3 hover:border-[#C9A84C]/70 hover:text-[#C9A84C]/90 transition-all duration-300"
           >
             View Projects
           </a>
           <a
             href="#signal"
-            className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/30 hover:text-foreground/70 transition-colors flex items-center gap-2 py-3 -my-3"
+            className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/60 hover:text-foreground/90 transition-colors flex items-center gap-2 py-3 -my-3"
           >
             Signal
-            <span className="text-[#C9A84C]/50">→</span>
+            <span className="text-[#C9A84C]/75">→</span>
           </a>
         </motion.div>
       </div>
@@ -169,9 +169,9 @@ export default function HeroSection() {
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-          className="w-px h-8 bg-foreground/15"
+          className="w-px h-8 bg-foreground/35"
         />
-        <span className="text-[10px] font-mono tracking-[0.4em] text-foreground/15 uppercase">
+        <span className="text-[10px] font-mono tracking-[0.4em] text-foreground/40 uppercase">
           scroll
         </span>
       </motion.div>

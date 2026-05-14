@@ -23,12 +23,12 @@ export default function Home() {
       </main>
       <footer className="border-t border-border/40 py-6 px-8 md:px-16 lg:px-24 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <SigilA size={16} className="text-foreground/25" />
-          <span className="text-xs font-mono text-foreground/18 tracking-widest">
+          <SigilA size={16} className="text-foreground/55" />
+          <span className="text-xs font-mono text-foreground/55 tracking-widest">
             mauroepce
           </span>
         </div>
-        <span className="text-xs font-mono text-foreground/18 tracking-widest">
+        <span className="text-xs font-mono text-foreground/55 tracking-widest">
           © 2026
         </span>
       </footer>

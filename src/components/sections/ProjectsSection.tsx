@@ -146,7 +146,7 @@ function ProjectCard({
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="group relative border-t border-foreground/8 py-12 hover:border-foreground/18 transition-colors"
+      className="group relative border-t border-foreground/20 py-12 hover:border-foreground/40 transition-colors"
     >
       <div
         className={`flex flex-col gap-10 ${
@@ -157,7 +157,7 @@ function ProjectCard({
       >
         {/* Number — hidden when mockup present on desktop */}
         <span
-          className={`text-7xl font-serif italic text-foreground/6 group-hover:text-foreground/10 transition-colors leading-none shrink-0 select-none ${
+          className={`text-7xl font-serif italic text-foreground/20 group-hover:text-foreground/35 transition-colors leading-none shrink-0 select-none ${
             hasMockup ? "lg:hidden" : ""
           }`}
         >
@@ -172,12 +172,12 @@ function ProjectCard({
                 <GlitchText text={project.title} />
               </h3>
               {project.badge && (
-                <span className="text-[10px] font-mono tracking-widest uppercase text-[#C9A84C]/70 border border-[#C9A84C]/25 px-2 py-0.5 self-center">
+                <span className="text-[10px] font-mono tracking-widest uppercase text-[#C9A84C]/90 border border-[#C9A84C]/50 px-2 py-0.5 self-center">
                   {project.badge}
                 </span>
               )}
             </div>
-            <span className="text-xs font-mono text-foreground/18 shrink-0 mt-2">
+            <span className="text-xs font-mono text-foreground/55 shrink-0 mt-2">
               {project.year}
             </span>
           </div>
@@ -192,7 +192,7 @@ function ProjectCard({
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] font-mono text-foreground/25 tracking-wider uppercase"
+                  className="text-[10px] font-mono text-foreground/55 tracking-wider uppercase"
                 >
                   {tag}
                 </span>
@@ -209,9 +209,9 @@ function ProjectCard({
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/28 hover:text-foreground/70 transition-colors flex items-center gap-2 py-2 -my-2"
+                  className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/60 hover:text-foreground/90 transition-colors flex items-center gap-2 py-2 -my-2"
                 >
-                  {link.label} <span className="text-[#C9A84C]/45">↗</span>
+                  {link.label} <span className="text-[#C9A84C]/75">↗</span>
                 </a>
               ))}
             </div>
@@ -266,13 +266,13 @@ export default function ProjectsSection() {
         transition={{ duration: 0.6 }}
         className="mb-16"
       >
-        <p className="text-foreground/20 text-xs font-mono tracking-[0.4em] mb-3">
+        <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
           / 02
         </p>
         <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
           Projects
         </h2>
-        <div className="mt-5 h-px w-12 bg-[#C9A84C]/40" />
+        <div className="mt-5 h-px w-12 bg-[#C9A84C]/65" />
       </motion.div>
 
       <div>
