@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SigilA from "@/components/sigils/SigilA";
+import Marginalia from "@/components/ui/Marginalia";
 
 const ROLES = [
   "Drawing.",
@@ -60,6 +61,12 @@ export default function HeroSection() {
       <div className="absolute top-24 right-12 md:right-24 opacity-[0.08] pointer-events-none text-foreground">
         <SigilA size={150} />
       </div>
+
+      <Marginalia
+        text="every build starts with a line"
+        position="bottom-right"
+        rotate={-4}
+      />
 
       <div className="max-w-4xl">
         {/* Typing indicator */}
@@ -139,7 +146,7 @@ export default function HeroSection() {
           </a>
           <a
             href="#signal"
-            className="text-xs font-mono tracking-widest uppercase text-foreground/30 hover:text-foreground/70 transition-colors flex items-center gap-2"
+            className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/30 hover:text-foreground/70 transition-colors flex items-center gap-2"
           >
             Signal
             <span className="text-[#C9A84C]/50">→</span>

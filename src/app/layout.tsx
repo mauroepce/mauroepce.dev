@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Cormorant_Garamond } from "next/font/google";
+import { IBM_Plex_Mono, Cormorant_Garamond, Caveat } from "next/font/google";
+import InkCursor from "@/components/ui/InkCursor";
 import "./globals.css";
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -13,6 +14,12 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -30,9 +37,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ibmPlexMono.variable} ${cormorant.variable} dark h-full antialiased`}
+      className={`${ibmPlexMono.variable} ${cormorant.variable} ${caveat.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <InkCursor />
         {children}
       </body>
     </html>

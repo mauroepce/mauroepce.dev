@@ -6,6 +6,12 @@ import GlitchText from "@/components/ui/GlitchText";
 import PhoneMockup from "@/components/ui/PhoneMockup";
 import PhoneSlideshow from "@/components/ui/PhoneSlideshow";
 import BrowserMockup from "@/components/ui/BrowserMockup";
+import Marginalia from "@/components/ui/Marginalia";
+import MockupExpandable from "@/components/ui/MockupExpandable";
+import ChileTravelSketch from "@/components/sketches/ChileTravelSketch";
+import HonorariosSketch from "@/components/sketches/HonorariosSketch";
+import ClaceboxSketch from "@/components/sketches/ClaceboxSketch";
+import BirdiSketch from "@/components/sketches/BirdiSketch";
 
 type Project = {
   number: string;
@@ -22,7 +28,23 @@ type Project = {
   mockup: "phone" | "browser" | "phone-slideshow" | null;
   url?: string;
   slides?: string[];
+  sketch?: "chiletravel" | "honorarios" | "clacebox" | "birdi";
 };
+
+function renderSketch(sketch: Project["sketch"]) {
+  switch (sketch) {
+    case "chiletravel":
+      return <ChileTravelSketch />;
+    case "honorarios":
+      return <HonorariosSketch />;
+    case "clacebox":
+      return <ClaceboxSketch />;
+    case "birdi":
+      return <BirdiSketch />;
+    default:
+      return null;
+  }
+}
 
 const projects: Project[] = [
   {
@@ -39,6 +61,7 @@ const projects: Project[] = [
     year: "2025",
     video: "/videos/chile-travel.mp4",
     mockup: "phone",
+    sketch: "chiletravel",
   },
   {
     number: "02",
@@ -55,6 +78,7 @@ const projects: Project[] = [
     video: "/videos/honorarios-cl.mp4",
     mockup: "browser",
     url: "honorarios-cl.kindtools.co",
+    sketch: "honorarios",
   },
   {
     number: "03",
@@ -71,6 +95,7 @@ const projects: Project[] = [
     video: "/videos/clacebox.mp4",
     mockup: "browser",
     url: "clacebox.com",
+    sketch: "clacebox",
   },
   {
     number: "04",
@@ -92,6 +117,7 @@ const projects: Project[] = [
       "/images/birdi/birdi-03.png",
       "/images/birdi/birdi-04.png",
     ],
+    sketch: "birdi",
   },
 ];
 
@@ -183,29 +209,38 @@ function ProjectCard({
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-mono tracking-widest uppercase text-foreground/28 hover:text-foreground/70 transition-colors flex items-center gap-2"
+                  className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/28 hover:text-foreground/70 transition-colors flex items-center gap-2"
                 >
                   {link.label} <span className="text-[#C9A84C]/45">↗</span>
                 </a>
               ))}
             </div>
           )}
+
+          {/* Technical sketch — the codex artifact */}
+          {renderSketch(project.sketch)}
         </div>
 
-        {/* Mockup */}
+        {/* Mockup — clickable to expand into modal */}
         {project.mockup === "phone" && (
-          <div className="shrink-0 flex justify-center lg:justify-end">
-            <PhoneMockup src={project.video ?? ""} />
+          <div className="shrink-0 flex justify-center lg:justify-end pb-8 lg:pb-0">
+            <MockupExpandable label={project.title} scale={1.8}>
+              <PhoneMockup src={project.video ?? ""} />
+            </MockupExpandable>
           </div>
         )}
         {project.mockup === "phone-slideshow" && project.slides && (
-          <div className="shrink-0 flex justify-center lg:justify-end">
-            <PhoneSlideshow slides={project.slides} />
+          <div className="shrink-0 flex justify-center lg:justify-end pb-8 lg:pb-0">
+            <MockupExpandable label={project.title} scale={1.8}>
+              <PhoneSlideshow slides={project.slides} />
+            </MockupExpandable>
           </div>
         )}
         {project.mockup === "browser" && (
-          <div className="shrink-0 flex justify-center lg:justify-end w-full lg:w-auto">
-            <BrowserMockup src={project.video} url={project.url} />
+          <div className="shrink-0 flex justify-center lg:justify-end w-full lg:w-auto pb-8 lg:pb-0">
+            <MockupExpandable label={project.title} scale={1.5}>
+              <BrowserMockup src={project.video} url={project.url} />
+            </MockupExpandable>
           </div>
         )}
       </div>
@@ -218,7 +253,12 @@ export default function ProjectsSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="projects" className="px-8 md:px-16 lg:px-24 py-32">
+    <section id="projects" className="relative px-8 md:px-16 lg:px-24 py-32">
+      <Marginalia
+        text="every object casts a shadow"
+        position="top-right"
+        rotate={-3}
+      />
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 24 }}

@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Marginalia from "@/components/ui/Marginalia";
 
 const skills = [
   "React",
@@ -42,7 +43,8 @@ function FadeIn({
 
 export default function AboutSection() {
   return (
-    <section id="about" className="px-8 md:px-16 lg:px-24 py-32">
+    <section id="about" className="relative px-8 md:px-16 lg:px-24 py-32">
+      <Marginalia text="same hand, three crafts" position="top-right" rotate={2} />
       <FadeIn>
         <div className="mb-16">
           <p className="text-foreground/20 text-xs font-mono tracking-[0.4em] mb-3">

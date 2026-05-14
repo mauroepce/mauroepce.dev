@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import type { SignalEntry } from "@/lib/signal";
+import Marginalia from "@/components/ui/Marginalia";
 
 function formatDate(iso: string): string {
   if (!iso) return "";
@@ -25,47 +26,55 @@ function SignalEntryItem({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: -10 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
+      initial={{ opacity: 0, y: 8 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Link
         href={`/signal/${entry.slug}`}
-        className="group block py-8 border-b border-foreground/6 hover:border-foreground/12 transition-colors"
+        className="group block py-10 border-b border-foreground/8 hover:border-foreground/18 transition-colors relative"
       >
         <article className="flex gap-8 md:gap-12">
-          <div className="shrink-0 pt-1 w-20 text-right">
-            <p className="text-[10px] font-mono text-foreground/18 tracking-wider">
-              {formatDate(entry.date)}
-            </p>
-            <p className="text-[10px] font-mono text-[#C9A84C]/38 tracking-wider">
-              {entry.week}
-            </p>
+          {/* Date stamp — corner of a journal page */}
+          <div className="shrink-0 w-28 relative">
+            <div className="border border-foreground/15 group-hover:border-[#C9A84C]/40 transition-colors p-3 bg-[#0a0a0a]/40">
+              <p className="text-[9px] font-mono text-foreground/40 tracking-[0.2em] uppercase mb-1">
+                {formatDate(entry.date)}
+              </p>
+              <div className="h-px w-6 bg-foreground/15 mb-1" />
+              <p
+                className="text-2xl text-[#C9A84C]/65 leading-none"
+                style={{ fontFamily: "var(--font-handwritten)" }}
+              >
+                {entry.week}
+              </p>
+            </div>
+            {/* Decorative pin mark */}
+            <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#C9A84C]/40 group-hover:bg-[#C9A84C]/80 transition-colors" />
           </div>
 
-          <div className="shrink-0 flex flex-col items-center pt-2">
-            <div className="w-px flex-1 bg-foreground/6 group-hover:bg-foreground/15 transition-colors" />
-            <div className="w-1 h-1 rounded-full bg-[#C9A84C]/38 my-2 shrink-0 group-hover:bg-[#C9A84C]/80 transition-colors" />
-          </div>
-
-          <div className="flex-1 space-y-2 pb-2">
+          {/* Journal page content */}
+          <div className="flex-1 min-w-0 space-y-3 pt-1">
             <div className="flex items-start gap-3">
-              <h3 className="font-serif text-xl text-foreground/70 group-hover:text-foreground transition-colors leading-snug flex-1">
+              <h3 className="font-serif italic text-2xl text-foreground/75 group-hover:text-foreground transition-colors leading-snug flex-1">
                 {entry.title}
               </h3>
-              <span className="text-[#C9A84C]/30 group-hover:text-[#C9A84C]/70 transition-colors text-sm pt-1 shrink-0">
+              <span className="text-[#C9A84C]/30 group-hover:text-[#C9A84C]/80 transition-colors text-sm pt-2 shrink-0">
                 →
               </span>
             </div>
-            <p className="text-xs font-mono text-foreground/32 leading-relaxed group-hover:text-foreground/50 transition-colors">
+            <p
+              className="text-base text-foreground/45 leading-relaxed group-hover:text-foreground/65 transition-colors max-w-2xl"
+              style={{ fontFamily: "var(--font-handwritten)" }}
+            >
               {entry.excerpt}
             </p>
             {entry.tags.length > 0 && (
-              <div className="flex gap-3 pt-1">
+              <div className="flex gap-3 pt-2">
                 {entry.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] font-mono text-foreground/18 tracking-wider"
+                    className="text-[10px] font-mono text-foreground/25 tracking-wider"
                   >
                     #{tag}
                   </span>
@@ -88,7 +97,12 @@ export default function SignalSection({ entries }: SignalSectionProps) {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="signal" className="px-8 md:px-16 lg:px-24 py-32">
+    <section id="signal" className="relative px-8 md:px-16 lg:px-24 py-32">
+      <Marginalia
+        text="the noise is the data"
+        position="top-right"
+        rotate={3}
+      />
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 24 }}
