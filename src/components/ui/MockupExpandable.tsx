@@ -15,6 +15,15 @@ export default function MockupExpandable({
   scale = 1.8,
 }: MockupExpandableProps) {
   const [open, setOpen] = useState(false);
+  const [effectiveScale, setEffectiveScale] = useState(1);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setEffectiveScale(mq.matches ? scale : 1);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [scale]);
 
   useEffect(() => {
     if (!open) return;
@@ -82,10 +91,9 @@ export default function MockupExpandable({
 
               <div
                 style={{
-                  transform: `scale(${scale})`,
+                  transform: `scale(${effectiveScale})`,
                   transformOrigin: "center top",
-                  // reserve layout space so the scaled element doesn't overlap modal chrome
-                  marginBottom: `calc(${(scale - 1) * 100}% - 0px)`,
+                  marginBottom: `calc(${(effectiveScale - 1) * 100}% - 0px)`,
                 }}
                 className="my-4"
               >

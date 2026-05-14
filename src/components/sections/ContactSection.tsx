@@ -27,7 +27,7 @@ export default function ContactSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="contact" className="px-8 md:px-16 lg:px-24 py-32">
+    <section id="contact" className="px-8 md:px-16 lg:px-24 py-20 md:py-28 lg:py-32">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 24 }}
@@ -84,16 +84,16 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="group flex items-center justify-between py-4 border-b border-foreground/8 hover:border-foreground/20 transition-all"
+              className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 py-4 border-b border-foreground/8 hover:border-foreground/20 transition-all"
             >
-              <span className="text-[10px] font-mono tracking-[0.35em] text-foreground/22 uppercase w-20">
+              <span className="text-[10px] font-mono tracking-[0.35em] text-foreground/22 uppercase sm:w-20 shrink-0">
                 {link.label}
               </span>
               <GlitchText
                 text={link.value}
-                className="text-xs font-mono text-foreground/38 group-hover:text-foreground/75 transition-colors"
+                className="text-xs font-mono text-foreground/38 group-hover:text-foreground/75 transition-colors break-all sm:break-normal sm:flex-1 sm:text-right"
               />
-              <span className="text-[#C9A84C]/28 group-hover:text-[#C9A84C]/65 transition-colors text-sm">
+              <span className="hidden sm:inline text-[#C9A84C]/28 group-hover:text-[#C9A84C]/65 transition-colors text-sm shrink-0">
                 ↗
               </span>
             </motion.a>

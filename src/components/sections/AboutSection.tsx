@@ -43,7 +43,7 @@ function FadeIn({
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative px-8 md:px-16 lg:px-24 py-32">
+    <section id="about" className="relative px-8 md:px-16 lg:px-24 py-20 md:py-28 lg:py-32">
       <Marginalia text="same hand, three crafts" position="top-right" rotate={2} />
       <FadeIn>
         <div className="mb-16">
@@ -108,13 +108,12 @@ export default function AboutSection() {
         {/* Right: Fine line visual */}
         <FadeIn delay={0.2}>
           <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="relative">
+            <div className="relative w-full max-w-70 mx-auto lg:mx-0">
               <svg
                 viewBox="0 0 300 300"
-                width="280"
-                height="280"
                 fill="none"
                 stroke="currentColor"
+                className="w-full h-auto"
               >
                 {/* Grid */}
                 {Array.from({ length: 7 }).map((_, i) => (

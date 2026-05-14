@@ -58,8 +58,13 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-20">
       {/* Decorative sigil top-right */}
-      <div className="absolute top-24 right-12 md:right-24 opacity-[0.08] pointer-events-none text-foreground">
-        <SigilA size={150} />
+      <div className="absolute top-24 right-6 md:right-24 opacity-[0.08] pointer-events-none text-foreground">
+        <span className="hidden md:block">
+          <SigilA size={150} />
+        </span>
+        <span className="md:hidden block">
+          <SigilA size={80} />
+        </span>
       </div>
 
       <Marginalia
@@ -77,7 +82,7 @@ export default function HeroSection() {
           className="mb-6 flex items-center gap-2"
         >
           <span className="text-[#C9A84C]/60 text-xs font-mono">{">"}</span>
-          <span className="text-sm font-mono text-foreground/40 min-w-[220px]">
+          <span className="text-sm font-mono text-foreground/40 min-w-55">
             {role}
             <span className="animate-pulse ml-0.5">_</span>
           </span>
@@ -88,7 +93,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-foreground mb-6"
+          className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-foreground mb-6"
         >
           Drawing.
           <br />
@@ -136,7 +141,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3 }}
-          className="flex items-center gap-8"
+          className="flex items-center gap-6 md:gap-8 flex-wrap"
         >
           <a
             href="#projects"
@@ -146,7 +151,7 @@ export default function HeroSection() {
           </a>
           <a
             href="#signal"
-            className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/30 hover:text-foreground/70 transition-colors flex items-center gap-2"
+            className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/30 hover:text-foreground/70 transition-colors flex items-center gap-2 py-3 -my-3"
           >
             Signal
             <span className="text-[#C9A84C]/50">→</span>

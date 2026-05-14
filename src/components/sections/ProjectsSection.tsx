@@ -209,7 +209,7 @@ function ProjectCard({
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/28 hover:text-foreground/70 transition-colors flex items-center gap-2"
+                  className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/28 hover:text-foreground/70 transition-colors flex items-center gap-2 py-2 -my-2"
                 >
                   {link.label} <span className="text-[#C9A84C]/45">↗</span>
                 </a>
@@ -253,7 +253,7 @@ export default function ProjectsSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="projects" className="relative px-8 md:px-16 lg:px-24 py-32">
+    <section id="projects" className="relative px-8 md:px-16 lg:px-24 py-20 md:py-28 lg:py-32">
       <Marginalia
         text="every object casts a shadow"
         position="top-right"

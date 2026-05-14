@@ -16,11 +16,11 @@ interface MarginaliaProps {
 }
 
 const POSITIONS: Record<NonNullable<MarginaliaProps["position"]>, string> = {
-  "top-left": "top-6 left-6",
-  "top-right": "top-6 right-6",
-  "bottom-left": "bottom-6 left-6",
-  "bottom-right": "bottom-6 right-6",
-  "right-middle": "top-1/2 right-8 -translate-y-1/2",
+  "top-left": "md:top-6 md:left-6",
+  "top-right": "md:top-6 md:right-6",
+  "bottom-left": "md:bottom-6 md:left-6",
+  "bottom-right": "md:bottom-6 md:right-6",
+  "right-middle": "md:top-1/2 md:right-8 md:-translate-y-1/2",
 };
 
 export default function Marginalia({
@@ -42,8 +42,9 @@ export default function Marginalia({
       style={{
         fontFamily: "var(--font-handwritten)",
         transform: `rotate(${rotate}deg)`,
+        transformOrigin: "left center",
       }}
-      className={`absolute ${POSITIONS[position]} pointer-events-auto text-[#C9A84C]/55 text-lg italic tracking-wide select-none cursor-default max-w-[220px] leading-tight ${className}`}
+      className={`block md:absolute ${POSITIONS[position]} mb-6 md:mb-0 pointer-events-auto text-[#C9A84C]/55 text-base md:text-lg italic tracking-wide select-none cursor-default max-w-full md:max-w-55 leading-tight ${className}`}
     >
       — {text}
     </motion.span>

@@ -171,7 +171,24 @@ html { scroll-behavior: smooth; }
 }
 .ink-underline:hover::before,
 .ink-underline:hover::after,
+.ink-underline:focus-visible::before,
+.ink-underline:focus-visible::after,
+.ink-underline:active::before,
+.ink-underline:active::after,
 .group:hover .ink-underline::before,
-.group:hover .ink-underline::after {
+.group:hover .ink-underline::after,
+.group:active .ink-underline::before,
+.group:active .ink-underline::after {
   transform: scaleX(1);
+}
+
+@media (hover: none) {
+  .ink-underline::before,
+  .ink-underline::after {
+    transform: scaleX(0.4);
+    opacity: 0.5;
+  }
+  .ink-underline::after {
+    opacity: 0.2;
+  }
 }
