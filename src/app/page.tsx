@@ -5,6 +5,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import SignalSection from "@/components/sections/SignalSection";
 import ContactSection from "@/components/sections/ContactSection";
+import SigilA from "@/components/sigils/SigilA";
 import { getSignalEntries } from "@/lib/signal";
 
 export default function Home() {
@@ -21,9 +22,12 @@ export default function Home() {
         <ContactSection />
       </main>
       <footer className="border-t border-border/40 py-6 px-8 md:px-16 lg:px-24 flex items-center justify-between">
-        <span className="text-xs font-mono text-foreground/18 tracking-widest">
-          mauroepce
-        </span>
+        <div className="flex items-center gap-3">
+          <SigilA size={16} className="text-foreground/25" />
+          <span className="text-xs font-mono text-foreground/18 tracking-widest">
+            mauroepce
+          </span>
+        </div>
         <span className="text-xs font-mono text-foreground/18 tracking-widest">
           © 2026
         </span>

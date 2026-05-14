@@ -17,13 +17,13 @@ export default function DrawingIntro({ onComplete }: DrawingIntroProps) {
   };
 
   useEffect(() => {
-    const t1 = setTimeout(() => setShowLabel(true), 2800);
-    const t2 = setTimeout(dismiss, 4800);
+    const t1 = setTimeout(() => setShowLabel(true), 3000);
+    const t2 = setTimeout(dismiss, 5000);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -38,110 +38,75 @@ export default function DrawingIntro({ onComplete }: DrawingIntroProps) {
           <div className="flex flex-col items-center gap-10">
             <svg
               viewBox="0 0 200 200"
-              width="160"
-              height="160"
+              width="180"
+              height="180"
               fill="none"
               strokeLinecap="round"
-              strokeLinejoin="round"
             >
-              {/* Outer circle */}
+              {/* Left circle — the first world (code/precision) */}
               <motion.path
-                d="M 22 100 a 78 78 0 1 0 156 0 a 78 78 0 1 0 -156 0"
+                d="M 36 100 a 44 44 0 1 0 88 0 a 44 44 0 1 0 -88 0"
                 stroke="#E8E2D5"
-                strokeWidth="0.6"
+                strokeWidth="0.9"
+                strokeOpacity="0.85"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 0, duration: 1.6, ease: "easeInOut" }}
+                transition={{ delay: 0, duration: 1.4, ease: "easeInOut" }}
               />
-              {/* Cardinal N spoke */}
+              {/* Right circle — the second world (art/gesture) */}
               <motion.path
-                d="M 100 70 L 100 22"
+                d="M 76 100 a 44 44 0 1 0 88 0 a 44 44 0 1 0 -88 0"
                 stroke="#E8E2D5"
-                strokeWidth="0.5"
+                strokeWidth="0.9"
+                strokeOpacity="0.85"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 1.3, duration: 0.4, ease: "easeInOut" }}
+                transition={{ delay: 0.9, duration: 1.4, ease: "easeInOut" }}
               />
-              {/* Cardinal S spoke */}
-              <motion.path
-                d="M 100 130 L 100 178"
+              {/* Vertical axis — what binds the two worlds */}
+              <motion.line
+                x1="100"
+                y1="32"
+                x2="100"
+                y2="168"
                 stroke="#E8E2D5"
-                strokeWidth="0.5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 1.4, duration: 0.4, ease: "easeInOut" }}
-              />
-              {/* Cardinal E spoke */}
-              <motion.path
-                d="M 130 100 L 178 100"
-                stroke="#E8E2D5"
-                strokeWidth="0.5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 1.5, duration: 0.4, ease: "easeInOut" }}
-              />
-              {/* Cardinal W spoke */}
-              <motion.path
-                d="M 70 100 L 22 100"
-                stroke="#E8E2D5"
-                strokeWidth="0.5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 1.6, duration: 0.4, ease: "easeInOut" }}
-              />
-              {/* Diagonal NE */}
-              <motion.path
-                d="M 121 79 L 155 45"
-                stroke="#E8E2D5"
-                strokeWidth="0.3"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 1.9, duration: 0.35, ease: "easeInOut" }}
-              />
-              {/* Diagonal NW */}
-              <motion.path
-                d="M 79 79 L 45 45"
-                stroke="#E8E2D5"
-                strokeWidth="0.3"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 2.0, duration: 0.35, ease: "easeInOut" }}
-              />
-              {/* Diagonal SE */}
-              <motion.path
-                d="M 121 121 L 155 155"
-                stroke="#E8E2D5"
-                strokeWidth="0.3"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 2.1, duration: 0.35, ease: "easeInOut" }}
-              />
-              {/* Diagonal SW */}
-              <motion.path
-                d="M 79 121 L 45 155"
-                stroke="#E8E2D5"
-                strokeWidth="0.3"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 2.2, duration: 0.35, ease: "easeInOut" }}
-              />
-              {/* Inner circle */}
-              <motion.path
-                d="M 70 100 a 30 30 0 1 0 60 0 a 30 30 0 1 0 -60 0"
-                stroke="#E8E2D5"
-                strokeWidth="0.4"
+                strokeWidth="0.7"
+                strokeOpacity="0.6"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ delay: 2.0, duration: 0.7, ease: "easeInOut" }}
               />
-              {/* Center dot — gold */}
-              <motion.path
-                d="M 97 100 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0"
-                stroke="none"
+              {/* Top anchor */}
+              <motion.circle
+                cx="100"
+                cy="32"
+                r="1.8"
+                fill="#E8E2D5"
+                fillOpacity="0.5"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 0.5, scale: 1 }}
+                transition={{ delay: 2.4, duration: 0.3 }}
+              />
+              {/* Bottom anchor */}
+              <motion.circle
+                cx="100"
+                cy="168"
+                r="1.8"
+                fill="#E8E2D5"
+                fillOpacity="0.5"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 0.5, scale: 1 }}
+                transition={{ delay: 2.5, duration: 0.3 }}
+              />
+              {/* Gold center — where dualities meet */}
+              <motion.circle
+                cx="100"
+                cy="100"
+                r="5"
                 fill="#C9A84C"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ delay: 2.6, duration: 0.3, ease: "easeInOut" }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 2.7, duration: 0.5, ease: "easeOut" }}
               />
             </svg>
 

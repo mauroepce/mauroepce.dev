@@ -11,6 +11,7 @@ import {
 } from "@/lib/signal";
 import { mdxComponents } from "@/components/mdx/MDXComponents";
 import NavBar from "@/components/layout/NavBar";
+import SigilA from "@/components/sigils/SigilA";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -220,9 +221,12 @@ export default async function SignalEntryPage({
         </article>
       </main>
       <footer className="border-t border-border/40 py-6 px-8 md:px-16 lg:px-24 flex items-center justify-between">
-        <span className="text-xs font-mono text-foreground/18 tracking-widest">
-          mauroepce
-        </span>
+        <div className="flex items-center gap-3">
+          <SigilA size={16} className="text-foreground/25" />
+          <span className="text-xs font-mono text-foreground/18 tracking-widest">
+            mauroepce
+          </span>
+        </div>
         <span className="text-xs font-mono text-foreground/18 tracking-widest">
           © 2026
         </span>

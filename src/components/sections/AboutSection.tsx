@@ -60,25 +60,27 @@ export default function AboutSection() {
         <div className="space-y-6">
           <FadeIn delay={0.1}>
             <p className="text-sm font-mono text-foreground/50 leading-loose">
-              Full-stack developer with 7 years building — from biotech
-              platforms in California to Web3 protocols on Stellar, to
-              marketplace apps that raised real investment.
+              I work across three disciplines that share one thing — a line
+              drawn with intent. Software systems, drawing, fine line tattoo
+              on synthetic skin. The art isn&apos;t a hobby of the
+              engineering; the engineering isn&apos;t a hobby of the art.
+              Same hand.
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="text-sm font-mono text-foreground/50 leading-loose">
-              I've also been on the other side of the table. I founded Birdi,
-              a marketplace startup, raised $150k in private investment, built
-              the Android app from scratch, and ran the business for 3 years.
-              That's the 360° I bring: I know how to build software, and I
-              know what it costs to bet on it.
+              Seven years writing production code. Currently full-stack at
+              TeselaGen Biotechnology (California, remote), consulting through
+              Saargo. Before that I founded Birdi — a marketplace startup
+              with last-mile logistics. Raised $100k USD in private
+              investment, built two coordinated native Android apps, ran the
+              business for three years before pandemic forced shutdown.
             </p>
           </FadeIn>
           <FadeIn delay={0.3}>
             <p className="text-sm font-mono text-foreground/50 leading-loose">
-              Outside the terminal — I draw, and I'm learning to tattoo fine
-              line on synthetic skin. Same discipline: plan the stroke,
-              commit, don't hesitate.
+              I work best with teams that care about what they build.
+              Open for remote freelance worldwide.
             </p>
           </FadeIn>
 

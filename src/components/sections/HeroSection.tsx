@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import SigilA from "@/components/sigils/SigilA";
 
 const ROLES = [
-  "Developer.",
-  "Artist.",
-  "Tattooist in training.",
+  "Drawing.",
+  "Building.",
+  "Shipping.",
   "mauroepce.",
 ];
 
@@ -55,33 +56,9 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-20">
-      {/* Decorative symbol top-right */}
-      <div className="absolute top-24 right-12 md:right-24 opacity-[0.06] pointer-events-none">
-        <svg
-          viewBox="0 0 200 200"
-          width="140"
-          height="140"
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-        >
-          <path
-            d="M 22 100 a 78 78 0 1 0 156 0 a 78 78 0 1 0 -156 0"
-            strokeWidth="0.6"
-          />
-          <path
-            d="M 100 70 L 100 22 M 100 130 L 100 178 M 130 100 L 178 100 M 70 100 L 22 100"
-            strokeWidth="0.5"
-          />
-          <path
-            d="M 121 79 L 155 45 M 79 79 L 45 45 M 121 121 L 155 155 M 79 121 L 45 155"
-            strokeWidth="0.3"
-          />
-          <path
-            d="M 70 100 a 30 30 0 1 0 60 0 a 30 30 0 1 0 -60 0"
-            strokeWidth="0.4"
-          />
-        </svg>
+      {/* Decorative sigil top-right */}
+      <div className="absolute top-24 right-12 md:right-24 opacity-[0.08] pointer-events-none text-foreground">
+        <SigilA size={150} />
       </div>
 
       <div className="max-w-4xl">
@@ -106,11 +83,11 @@ export default function HeroSection() {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight text-foreground mb-6"
         >
-          I leave marks.
+          Drawing.
           <br />
-          <span className="italic text-foreground/55">On screens.</span>
+          <span className="italic text-foreground/55">Building.</span>
           <br />
-          On skin.
+          Shipping.
         </motion.h1>
 
         {/* Sub tagline */}
@@ -118,9 +95,9 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.6 }}
-          className="text-xs font-mono tracking-[0.3em] text-foreground/22 mb-10"
+          className="text-xs font-mono tracking-[0.3em] text-foreground/22 mb-10 italic"
         >
-          and on the systems no one sees.
+          — the same hand.
         </motion.p>
 
         {/* Gold separator */}
@@ -136,9 +113,13 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1 }}
-          className="text-sm font-mono text-foreground/35 mb-10 max-w-sm leading-loose"
+          className="text-sm font-mono text-foreground/35 mb-10 max-w-md leading-loose"
         >
-          Full Stack Developer · ~4 years building.
+          Software systems. Drawing. Fine line tattoo.
+          <br />
+          ~7 years writing production code,
+          <br />
+          3 of those running my own startup.
           <br />
           Open to remote freelance worldwide.
         </motion.p>

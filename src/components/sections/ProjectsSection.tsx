@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import GlitchText from "@/components/ui/GlitchText";
 import PhoneMockup from "@/components/ui/PhoneMockup";
+import PhoneSlideshow from "@/components/ui/PhoneSlideshow";
 import BrowserMockup from "@/components/ui/BrowserMockup";
 
 type Project = {
@@ -18,8 +19,9 @@ type Project = {
   playStore: string | null;
   year: string;
   video: string | null;
-  mockup: "phone" | "browser" | null;
+  mockup: "phone" | "browser" | "phone-slideshow" | null;
   url?: string;
+  slides?: string[];
 };
 
 const projects: Project[] = [
@@ -69,6 +71,27 @@ const projects: Project[] = [
     video: "/videos/clacebox.mp4",
     mockup: "browser",
     url: "clacebox.com",
+  },
+  {
+    number: "04",
+    title: "Birdi",
+    badge: "Founded",
+    description:
+      "C2C marketplace + last-mile logistics for Chile — Rappi meets Facebook Marketplace. Founded the company, raised $100k USD private investment, ran it for 3 years. Two coordinated native Android apps in Kotlin (one for buyers/sellers, one for couriers), Firebase + Node.js backend on GCP. The hard problem was escrow: buyer funds held in an internal wallet until couriers completed in-person verification at pickup (ID photos, signatures, condition checks per security protocol) and confirmed delivery. Cron jobs reconciled wallet balances daily; payouts triggered post-delivery. Transbank payment gateway. Shut down in 2021 — pandemic and capital decisions.",
+    tags: ["Kotlin", "Android", "Firebase", "GCP", "Node.js", "Transbank", "Cron", "Founder"],
+    github: null,
+    live: null,
+    appStore: null,
+    playStore: null,
+    year: "2019–2021",
+    video: null,
+    mockup: "phone-slideshow",
+    slides: [
+      "/images/birdi/birdi-01.png",
+      "/images/birdi/birdi-02.png",
+      "/images/birdi/birdi-03.png",
+      "/images/birdi/birdi-04.png",
+    ],
   },
 ];
 
@@ -173,6 +196,11 @@ function ProjectCard({
         {project.mockup === "phone" && (
           <div className="shrink-0 flex justify-center lg:justify-end">
             <PhoneMockup src={project.video ?? ""} />
+          </div>
+        )}
+        {project.mockup === "phone-slideshow" && project.slides && (
+          <div className="shrink-0 flex justify-center lg:justify-end">
+            <PhoneSlideshow slides={project.slides} />
           </div>
         )}
         {project.mockup === "browser" && (
