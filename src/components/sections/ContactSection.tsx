@@ -68,7 +68,7 @@ export default function ContactSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xs font-mono text-foreground/55 tracking-widest uppercase"
           >
-            Based in Colombia · Available worldwide
+            Based in Chile · Available worldwide
           </motion.p>
         </div>
 
