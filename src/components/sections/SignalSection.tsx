@@ -70,16 +70,19 @@ function SignalEntryItem({
               {entry.excerpt}
             </p>
             {entry.tags.length > 0 && (
-              <div className="flex gap-3 pt-2">
+              <ul
+                aria-label="Tags"
+                className="flex gap-3 pt-2 list-none p-0 m-0"
+              >
                 {entry.tags.map((tag) => (
-                  <span
+                  <li
                     key={tag}
                     className="text-[10px] font-mono text-foreground/55 tracking-wider"
                   >
                     #{tag}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
           </div>
         </article>
@@ -110,7 +113,10 @@ export default function SignalSection({ entries }: SignalSectionProps) {
         transition={{ duration: 0.6 }}
         className="mb-16"
       >
-        <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
+        <p
+          aria-hidden="true"
+          className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3"
+        >
           / 03
         </p>
         <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">

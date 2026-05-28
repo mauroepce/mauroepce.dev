@@ -132,11 +132,27 @@ function ProjectCard({
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   const links = [
-    project.github && { label: "GitHub", href: project.github },
-    project.live && { label: "Live", href: project.live },
-    project.appStore && { label: "App Store", href: project.appStore },
-    project.playStore && { label: "Google Play", href: project.playStore },
-  ].filter(Boolean) as { label: string; href: string }[];
+    project.github && {
+      label: "GitHub",
+      href: project.github,
+      ariaLabel: `View ${project.title} source on GitHub (opens in new tab)`,
+    },
+    project.live && {
+      label: "Live",
+      href: project.live,
+      ariaLabel: `View ${project.title} live (opens in new tab)`,
+    },
+    project.appStore && {
+      label: "App Store",
+      href: project.appStore,
+      ariaLabel: `${project.title} on the App Store (opens in new tab)`,
+    },
+    project.playStore && {
+      label: "Google Play",
+      href: project.playStore,
+      ariaLabel: `${project.title} on Google Play (opens in new tab)`,
+    },
+  ].filter(Boolean) as { label: string; href: string; ariaLabel: string }[];
 
   const hasMockup = project.mockup !== null;
 
@@ -157,6 +173,7 @@ function ProjectCard({
       >
         {/* Number — hidden when mockup present on desktop */}
         <span
+          aria-hidden="true"
           className={`text-7xl font-serif italic text-foreground/20 group-hover:text-foreground/35 transition-colors leading-none shrink-0 select-none ${
             hasMockup ? "lg:hidden" : ""
           }`}
@@ -188,16 +205,19 @@ function ProjectCard({
 
           {/* Tags */}
           {project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-3 pt-1">
+            <ul
+              aria-label={`${project.title} tech stack`}
+              className="flex flex-wrap gap-3 pt-1 list-none p-0 m-0"
+            >
               {project.tags.map((tag) => (
-                <span
+                <li
                   key={tag}
                   className="text-[10px] font-mono text-foreground/55 tracking-wider uppercase"
                 >
                   {tag}
-                </span>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
 
           {/* Links */}
@@ -209,9 +229,13 @@ function ProjectCard({
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={link.ariaLabel}
                   className="ink-underline text-xs font-mono tracking-widest uppercase text-foreground/60 hover:text-foreground/90 transition-colors flex items-center gap-2 py-2 -my-2"
                 >
-                  {link.label} <span className="text-[#C9A84C]/75">↗</span>
+                  {link.label}{" "}
+                  <span aria-hidden="true" className="text-[#C9A84C]/75">
+                    ↗
+                  </span>
                 </a>
               ))}
             </div>
@@ -225,21 +249,28 @@ function ProjectCard({
         {project.mockup === "phone" && (
           <div className="shrink-0 flex justify-center lg:justify-end pb-8 lg:pb-0">
             <MockupExpandable label={project.title} scale={1.8}>
-              <PhoneMockup src={project.video ?? ""} />
+              <PhoneMockup
+                src={project.video ?? ""}
+                label={`${project.title} mobile app demo`}
+              />
             </MockupExpandable>
           </div>
         )}
         {project.mockup === "phone-slideshow" && project.slides && (
           <div className="shrink-0 flex justify-center lg:justify-end pb-8 lg:pb-0">
             <MockupExpandable label={project.title} scale={1.8}>
-              <PhoneSlideshow slides={project.slides} />
+              <PhoneSlideshow slides={project.slides} label={project.title} />
             </MockupExpandable>
           </div>
         )}
         {project.mockup === "browser" && (
           <div className="shrink-0 flex justify-center lg:justify-end w-full lg:w-auto pb-8 lg:pb-0">
             <MockupExpandable label={project.title} scale={1.5}>
-              <BrowserMockup src={project.video} url={project.url} />
+              <BrowserMockup
+                src={project.video}
+                url={project.url}
+                label={`${project.title} web app demo`}
+              />
             </MockupExpandable>
           </div>
         )}
@@ -266,7 +297,10 @@ export default function ProjectsSection() {
         transition={{ duration: 0.6 }}
         className="mb-16"
       >
-        <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
+        <p
+          aria-hidden="true"
+          className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3"
+        >
           / 02
         </p>
         <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">

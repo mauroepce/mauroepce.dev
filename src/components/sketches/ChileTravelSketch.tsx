@@ -7,9 +7,20 @@ export default function ChileTravelSketch() {
         <svg
           viewBox="0 0 320 200"
           fill="none"
+          role="img"
+          aria-labelledby="chiletravel-sketch-title chiletravel-sketch-desc"
           className="w-full h-auto text-foreground/70"
           strokeLinecap="round"
         >
+          <title id="chiletravel-sketch-title">
+            Three-level geo-normalized cache
+          </title>
+          <desc id="chiletravel-sketch-desc">
+            Three concentric circles representing cache tiers: outer ring is
+            Firestore (cold), middle is IndexedDB, inner is in-memory (hot).
+            Geo cells inside the inner ring show coordinate quantization down
+            to ~1.1km, enabling sub-50ms list reads.
+          </desc>
           {/* Outer circle — Firestore (cold) */}
           <circle
             cx="160"

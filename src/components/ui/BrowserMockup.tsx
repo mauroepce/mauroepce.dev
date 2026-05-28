@@ -6,6 +6,7 @@ import { motion, useInView } from "framer-motion";
 interface BrowserMockupProps {
   src?: string | null;
   url?: string;
+  label?: string;
 }
 
 const W = 480;
@@ -15,6 +16,7 @@ const TOP = 30;
 export default function BrowserMockup({
   src,
   url = "localhost:3000",
+  label,
 }: BrowserMockupProps) {
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -47,6 +49,7 @@ export default function BrowserMockup({
           viewBox={`0 0 ${W} ${H}`}
           fill="none"
           preserveAspectRatio="none"
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full"
           style={{ zIndex: 2, pointerEvents: "none" }}
         >
@@ -159,6 +162,7 @@ export default function BrowserMockup({
                 loop
                 playsInline
                 preload="metadata"
+                aria-label={label}
                 onCanPlay={() => setLoaded(true)}
                 className="w-full h-full object-cover"
                 style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.5s" }}

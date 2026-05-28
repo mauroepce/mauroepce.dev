@@ -7,9 +7,20 @@ export default function BirdiSketch() {
         <svg
           viewBox="0 0 320 200"
           fill="none"
+          role="img"
+          aria-labelledby="birdi-sketch-title birdi-sketch-desc"
           className="w-full h-auto text-foreground/70"
           strokeLinecap="round"
         >
+          <title id="birdi-sketch-title">
+            Dual-app marketplace with escrow wallet
+          </title>
+          <desc id="birdi-sketch-desc">
+            Two coordinated Android apps — Buyer on the top left, Shipper on
+            the top right — both connecting to a central hexagonal backend at
+            the bottom that holds an escrow wallet. Funds are held until the
+            shipper completes in-person verification at pickup and delivery.
+          </desc>
           {/* Buyer app — top left */}
           <circle
             cx="60"

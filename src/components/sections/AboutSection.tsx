@@ -47,7 +47,10 @@ export default function AboutSection() {
       <Marginalia text="same hand, three crafts" position="top-right" rotate={2} />
       <FadeIn>
         <div className="mb-16">
-          <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
+          <p
+            aria-hidden="true"
+            className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3"
+          >
             / 01
           </p>
           <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
@@ -88,19 +91,25 @@ export default function AboutSection() {
 
           <FadeIn delay={0.4}>
             <div className="pt-4">
-              <p className="text-[10px] font-mono tracking-[0.4em] text-foreground/50 uppercase mb-4">
+              <p
+                id="stack-label"
+                className="text-[10px] font-mono tracking-[0.4em] text-foreground/50 uppercase mb-4"
+              >
                 Stack
               </p>
-              <div className="flex flex-wrap gap-2">
+              <ul
+                aria-labelledby="stack-label"
+                className="flex flex-wrap gap-2 list-none p-0 m-0"
+              >
                 {skills.map((skill) => (
-                  <span
+                  <li
                     key={skill}
                     className="text-xs font-mono text-foreground/65 border border-foreground/25 px-3 py-1 hover:border-[#C9A84C]/50 hover:text-foreground/90 transition-all"
                   >
                     {skill}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </FadeIn>
         </div>

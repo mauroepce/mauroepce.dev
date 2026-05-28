@@ -5,9 +5,10 @@ import { motion, useInView } from "framer-motion";
 
 interface PhoneMockupProps {
   src: string;
+  label?: string;
 }
 
-export default function PhoneMockup({ src }: PhoneMockupProps) {
+export default function PhoneMockup({ src, label }: PhoneMockupProps) {
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const inView = useInView(ref, { once: false, margin: "-100px" });
@@ -36,6 +37,7 @@ export default function PhoneMockup({ src }: PhoneMockupProps) {
         <svg
           viewBox="0 0 220 440"
           fill="none"
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full"
           style={{ zIndex: 2, pointerEvents: "none" }}
         >
@@ -111,6 +113,7 @@ export default function PhoneMockup({ src }: PhoneMockupProps) {
             loop
             playsInline
             preload="metadata"
+            aria-label={label}
             onCanPlay={() => setLoaded(true)}
             className="w-full h-full object-cover"
             style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.5s" }}

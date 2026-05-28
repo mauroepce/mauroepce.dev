@@ -7,9 +7,20 @@ export default function ClaceboxSketch() {
         <svg
           viewBox="0 0 320 200"
           fill="none"
+          role="img"
+          aria-labelledby="clacebox-sketch-title clacebox-sketch-desc"
           className="w-full h-auto text-foreground/70"
           strokeLinecap="round"
         >
+          <title id="clacebox-sketch-title">
+            Payment strategy with swappable gateway
+          </title>
+          <desc id="clacebox-sketch-desc">
+            A central hexagonal PaymentStrategy interface surrounded by four
+            interchangeable provider nodes (Lemon Squeezy active, plus Stripe,
+            MercadoPago and Kushki as alternates), illustrating that the
+            checkout code never needs to change when swapping providers.
+          </desc>
           {/* Central hexagon — PaymentStrategy interface */}
           <path
             d="M 160 60 L 188 76 L 188 108 L 160 124 L 132 108 L 132 76 Z"

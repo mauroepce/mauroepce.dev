@@ -7,6 +7,7 @@ import Image from "next/image";
 interface PhoneSlideshowProps {
   slides: string[];
   interval?: number;
+  label?: string;
 }
 
 const W = 220;
@@ -15,6 +16,7 @@ const H = 440;
 export default function PhoneSlideshow({
   slides,
   interval = 3500,
+  label,
 }: PhoneSlideshowProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: false, margin: "-100px" });
@@ -41,6 +43,7 @@ export default function PhoneSlideshow({
         <svg
           viewBox="0 0 220 440"
           fill="none"
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full"
           style={{ zIndex: 2, pointerEvents: "none" }}
         >
@@ -140,7 +143,11 @@ export default function PhoneSlideshow({
             >
               <Image
                 src={slides[index]}
-                alt={`Slide ${index + 1}`}
+                alt={
+                  label
+                    ? `${label} screenshot ${index + 1} of ${slides.length}`
+                    : `Screenshot ${index + 1} of ${slides.length}`
+                }
                 fill
                 sizes="200px"
                 className="object-cover"

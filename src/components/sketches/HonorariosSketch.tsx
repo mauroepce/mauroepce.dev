@@ -15,9 +15,20 @@ export default function HonorariosSketch() {
         <svg
           viewBox="0 0 320 160"
           fill="none"
+          role="img"
+          aria-labelledby="honorarios-sketch-title honorarios-sketch-desc"
           className="w-full h-auto text-foreground/70"
           strokeLinecap="round"
         >
+          <title id="honorarios-sketch-title">
+            Intent preservation auth flow
+          </title>
+          <desc id="honorarios-sketch-desc">
+            Five sequential nodes (Calc, Draft, Email, Checkout, Form) connected
+            by a dashed line. A gold token travels through them representing
+            the user&apos;s intent surviving the full auth roundtrip without
+            loss of state.
+          </desc>
           {/* Flowing horizontal line — the intent thread */}
           <path
             d="M 30 80 L 290 80"

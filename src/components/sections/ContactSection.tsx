@@ -35,7 +35,10 @@ export default function ContactSection() {
         transition={{ duration: 0.6 }}
         className="mb-16"
       >
-        <p className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3">
+        <p
+          aria-hidden="true"
+          className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3"
+        >
           / 04
         </p>
         <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
@@ -74,30 +77,41 @@ export default function ContactSection() {
 
         {/* Right: Links */}
         <div className="space-y-0">
-          {contactLinks.map((link, i) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, x: 10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 py-4 border-b border-foreground/20 hover:border-foreground/45 transition-all"
-            >
-              <span className="text-[10px] font-mono tracking-[0.35em] text-foreground/55 uppercase sm:w-20 shrink-0">
-                {link.label}
-              </span>
-              <GlitchText
-                text={link.value}
-                className="text-xs font-mono text-foreground/70 group-hover:text-foreground/95 transition-colors break-all sm:break-normal sm:flex-1 sm:text-right"
-              />
-              <span className="hidden sm:inline text-[#C9A84C]/55 group-hover:text-[#C9A84C]/85 transition-colors text-sm shrink-0">
-                ↗
-              </span>
-            </motion.a>
-          ))}
+          {contactLinks.map((link, i) => {
+            const isExternal = link.href.startsWith("http");
+            return (
+              <motion.a
+                key={link.label}
+                href={link.href}
+                target={isExternal ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                aria-label={
+                  isExternal
+                    ? `${link.label}: ${link.value} (opens in new tab)`
+                    : `${link.label}: ${link.value}`
+                }
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 py-4 border-b border-foreground/20 hover:border-foreground/45 transition-all"
+              >
+                <span className="text-[10px] font-mono tracking-[0.35em] text-foreground/55 uppercase sm:w-20 shrink-0">
+                  {link.label}
+                </span>
+                <GlitchText
+                  text={link.value}
+                  className="text-xs font-mono text-foreground/70 group-hover:text-foreground/95 transition-colors break-all sm:break-normal sm:flex-1 sm:text-right"
+                />
+                <span
+                  aria-hidden="true"
+                  className="hidden sm:inline text-[#C9A84C]/55 group-hover:text-[#C9A84C]/85 transition-colors text-sm shrink-0"
+                >
+                  ↗
+                </span>
+              </motion.a>
+            );
+          })}
         </div>
       </div>
     </section>
