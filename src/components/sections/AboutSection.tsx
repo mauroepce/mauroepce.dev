@@ -75,11 +75,11 @@ export default function AboutSection() {
           <FadeIn delay={0.2}>
             <p className="text-sm font-mono text-foreground/65 leading-loose">
               Seven years writing production code. Currently full-stack at
-              TeselaGen Biotechnology (California, remote), consulting through
-              Saargo. Before that I founded Birdi — a marketplace startup
-              with last-mile logistics. Raised $100k USD in private
-              investment, built two coordinated native Android apps, ran the
-              business for three years before pandemic forced shutdown.
+              TeselaGen Biotechnology (California, remote). Earlier I founded
+              Birdi, a Chilean marketplace startup with last-mile logistics —
+              raised $100k USD, ran it for three years, shipped two
+              coordinated native Android apps with my team before pandemic
+              forced shutdown.
             </p>
           </FadeIn>
           <FadeIn delay={0.3}>
