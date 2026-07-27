@@ -1,0 +1,141 @@
+---
+title: "I Built a Framework on Claude Code. Then Anthropic Changed a Default. Here's How I Defended It."
+date: "2026-07-27"
+tags: ["claude-code", "ai-engineering", "framework", "devtools", "anthropic"]
+excerpt: "A defense pattern for agent frameworks built on evolving platforms, using Claude Code's July 2026 AskUserQuestion misfeature as the case study."
+readingTime: "7 min read"
+---
+
+On July 17, 2026, [Olaf Alders published "Claude Code: Anatomy of a Misfeature"](https://www.olafalders.com/2026/07/17/claude-code-anatomy-of-a-misfeature/). He documented a silent change in Claude Code v2.1.198. The `AskUserQuestion` tool (the primary mechanism agents use to pause and wait for human input) started auto-continuing after 60 seconds of user silence, using the model's best-guess answer instead of blocking. No release notes. No opt-out setting. Only an undocumented `CLAUDE_AFK_TIMEOUT_MS` env var as escape.
+
+Anthropic reverted the default in 2.1.200+. But the episode revealed a class of risk I hadn't accounted for in my own work.
+
+This is a write-up of the defensive pattern I built in response, and why it applies to anyone shipping a framework on top of an AI agent platform they don't control.
+
+## Why I noticed
+
+I maintain a personal Claude Code toolkit whose central discipline is human-in-the-loop confirmation at every code-generation gate. Spec review before implementation, explicit confirmation before commit, a second OK before pushing to `main`, hypothesis capture before investigating a bug. All of those gates share one dependency: they invoke `AskUserQuestion` to pause the agent and wait for me to approve or redirect.
+
+If that behavior changes (say, auto-continues with a guess after 60 seconds), every gate silently degrades. The user thinks they're being asked. In reality, the agent decided for them.
+
+That's the threat Alders' article documented. The rest of this piece is what I built in response: two standalone defensive scripts, plus the reasoning that ties them into a pattern generalizable beyond my situation. If you want to see the toolkit itself, [it's on GitHub](https://github.com/mauroepce/claude-workspace), but it's not the point of the article.
+
+## The class of risk (not just this bug)
+
+The specific misfeature was reverted, but the pattern it revealed is permanent: **any framework built on top of a platform can have its guarantees silently degraded when the platform changes behavior**.
+
+Traditional software has a version of this problem: dependency updates break API contracts. But agent frameworks have a newer, sneakier version. The dependency can silently change *behavior*, not just API. Your code compiles. Your tests pass. Your safety gates *appear* to still exist. But under the hood, the semantics moved.
+
+### Why this matters at every scale
+
+To make the abstraction concrete, here's what a silent auto-continue on `AskUserQuestion` breaks across three progressively higher-stakes contexts. None of these require Anthropic to reintroduce the exact same misfeature. Any *equivalent* silent behavior change (a new default timeout, a renamed setting, a semantic tweak that "seemed harmless") reproduces the same class of failure.
+
+**Solo developer.** Your commit-confirmation step (the one that shows you the diff and asks *"commit with this message?"*) was supposed to pause the agent. You stepped away to take a call. Claude interpreted the silence as approval and committed. The commit landed with a suboptimal message you would have edited. Recoverable, but the review discipline just quietly disappeared.
+
+**Team environment.** Your push-to-main gate (the one that asks *"confirm push to main?"* before shipping) was the last checkpoint. You were mid-Slack thread. Claude waited 60 seconds, decided you'd have said yes, pushed. CI kicked off. Your team's convention of *"main is protected by explicit human review"* became a suggestion, not a rule.
+
+**Regulated or high-stakes context.** Your CI pipeline's manual approval gate for production deploys was implemented as an `AskUserQuestion` prompt to the on-call engineer. During a routine change, the on-call was multitasking. The 60-second timeout let the deploy through without explicit human sign-off. If your compliance framework (SOC 2, HIPAA, PCI-DSS, ISO 27001) requires documented human approval for production changes, the auto-continue is no longer just a bug. It's an audit finding. And your organization owns explaining it to the auditor, not Anthropic.
+
+### The stance that follows
+
+Once I saw this class of risk clearly, retroactively "trusting Anthropic to be careful" felt like the wrong stance. Not because Anthropic is careless (they're not, and they reverted the misfeature quickly), but because trust-in-vendor is not a defense pattern. **Explicit configuration is.**
+
+## Three defenses
+
+I settled on three configuration values that live in `~/.claude/settings.json`. Each one defends against a distinct failure vector:
+
+```json
+{
+  "askUserQuestionTimeout": "never",
+  "env": {
+    "CLAUDE_AFK_TIMEOUT_MS": "9999999999",
+    "DISABLE_AUTOUPDATER": "1"
+  }
+}
+```
+
+**Defense 1: `"askUserQuestionTimeout": "never"`**
+
+The official setting Anthropic added in 2.1.200+. Setting it explicitly (rather than relying on the current default) means that if a future version silently ships a new default, my explicit value wins. Even if `"never"` becomes non-default, my config is unaffected.
+
+Cost: zero. Value: the framework works predictably across version drift.
+
+**Defense 2: `CLAUDE_AFK_TIMEOUT_MS: "9999999999"`**
+
+Redundant with Defense 1 today. But in Claude Code's precedence order, env vars override config file settings. If a future version renames `askUserQuestionTimeout` (a real possibility, API surfaces get refactored), the env var still holds the line. Nine-plus-nine-plus-nine milliseconds is roughly 316 years; effectively infinite.
+
+This is belt-and-suspenders. Two independent mechanisms that both do the same thing, so no single change vector can silently break the guarantee.
+
+**Defense 3: `DISABLE_AUTOUPDATER: "1"`**
+
+The most important of the three. Claude Code, like most modern dev tools, auto-updates. Auto-updates are why the 2.1.198 misfeature reached users in the first place. Nobody was asked to update to the affected version. Disabling the auto-updater doesn't prevent me from ever updating; it makes me the one who decides *when*.
+
+The workflow is: I see a new version, I read the changelog, I check the community for issues, I update deliberately, then I run my verify script to confirm the config still holds. It's five minutes of overhead per update. It prevents the "silently updated into a known-bad version" failure mode entirely.
+
+## Two scripts capture the discipline
+
+Reading a blog post and copy-pasting three config values into a file is not a defense pattern. It's a one-time behavior that decays. So the discipline needs to be automated.
+
+I wrote two scripts. Well, Claude typed them. I directed the effort and took the credit, which is apparently how this works now. Both public at [`github.com/mauroepce/claude-workspace/tree/main/bin`](https://github.com/mauroepce/claude-workspace/tree/main/bin):
+
+### `verify-claude-config.sh` (read-only diagnostic)
+
+Six checks:
+
+1. Claude Code version detection. Warns if you're on 2.1.198–199 (the known danger zone).
+2. `askUserQuestionTimeout` in `settings.json` or `settings.local.json`
+3. `CLAUDE_AFK_TIMEOUT_MS` env var
+4. `DISABLE_AUTOUPDATER` env var
+5. Framework commands installed (expects 16)
+6. Framework templates installed (expects 9)
+
+Exit code 0 for all pass, 1 for warnings only, 2 for critical issues. Safe to run in CI, safe to run in your dev loop, safe to run before every agent session if you're paranoid.
+
+### `apply-trust-defenses.sh` (idempotent config setter)
+
+Uses `jq` to merge the three defense values into your existing `~/.claude/settings.json`. Critical property: **it preserves all other fields**. My existing 70 permissions, my preferred model, my `effortLevel`: all untouched. Only the three defenses get added or updated.
+
+Every run creates a timestamped backup (`settings.json.backup-YYYYMMDDTHHMMSSZ`) before writing. Every run is idempotent: if the defenses are already in place, it says so and exits 0 without touching anything. If you invoke it with `--yes` (for CI or scripted installs), it skips the confirmation prompt.
+
+The framework installer offers to run `apply-trust-defenses.sh` as an opt-in final step. Nothing gets applied without user confirmation.
+
+## The generalizable principle
+
+This isn't really about Claude Code. It's about *any critical vendor dependency where a silent behavior change can degrade your guarantees*.
+
+The same defensive pattern scales to:
+
+- **Payment providers**: pin Stripe API versions explicitly in your API calls. Don't rely on the "current stable"; the current stable can change.
+- **Database drivers**: pin ORM versions in `package.json` with exact versions, not ranges, when the ORM's query semantics matter for correctness.
+- **OAuth providers**: read your provider's discovery document at startup and validate the shape you expect. If Google or Auth0 changes their token format, you find out at deploy time, not at "user can't log in" time.
+- **LLM configuration**: pin model versions (`gpt-4o-2024-11-20`, not `gpt-4o-latest`) and temperature values explicitly in versioned files. Model behavior drifts across versions in ways that matter for reproducibility.
+
+The principle underneath: **for anything where a silent change would degrade your guarantees, pin the value explicitly in a file you version-control, and add automated verification that the pin is still in place**. Trust-in-vendor is not a defense pattern. Explicit configuration is.
+
+## Try it yourself
+
+The defenses are the point. If all you want is the two scripts and the three config values, they stand alone:
+
+**Verify your current config** (read-only, no changes):
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/mauroepce/claude-workspace/main/bin/verify-claude-config.sh)
+```
+
+**Apply the three defenses** (idempotent, backs up your `settings.json` first):
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/mauroepce/claude-workspace/main/bin/apply-trust-defenses.sh)
+```
+
+Both scripts are MIT licensed. Neither depends on the rest of the toolkit. Take just the defense pattern and go.
+
+If the discipline behind why I wrote the scripts (spec-first work, explicit confirmation gates, auto-load of codebase conventions) is interesting to you, the [full framework](https://github.com/mauroepce/claude-workspace) is documented in its own README. But that's a separate decision from adopting the defenses.
+
+## Credit
+
+Full credit to [Olaf Alders](https://www.olafalders.com/) for the original [Anatomy of a Misfeature](https://www.olafalders.com/2026/07/17/claude-code-anatomy-of-a-misfeature/) article. His forensic analysis of the release process is what revealed the pattern; my contribution is packaging the defense as installable scripts. If you found this useful, read his piece. It goes deeper on the governance side of what happened.
+
+---
+
+*Feedback welcome via [GitHub issues](https://github.com/mauroepce/claude-workspace/issues) or [LinkedIn](https://linkedin.com/in/mauroepce).*
