@@ -10,7 +10,8 @@ const links = [
   { label: "About", href: "/#about", number: "01" },
   { label: "Projects", href: "/#projects", number: "02" },
   { label: "Signal", href: "/#signal", number: "03" },
-  { label: "Contact", href: "/#contact", number: "04" },
+  { label: "Blog", href: "/blog", number: "04" },
+  { label: "Contact", href: "/#contact", number: "05" },
 ];
 
 export default function NavBar() {

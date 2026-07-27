@@ -39,7 +39,7 @@ export default function ContactSection() {
           aria-hidden="true"
           className="text-foreground/50 text-xs font-mono tracking-[0.4em] mb-3"
         >
-          / 04
+          / 05
         </p>
         <h2 className="font-serif italic text-5xl md:text-6xl text-foreground">
           Let&apos;s build.
