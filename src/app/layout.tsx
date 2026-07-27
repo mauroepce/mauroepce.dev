@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Cormorant_Garamond, Caveat } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import InkCursor from "@/components/ui/InkCursor";
 import "./globals.css";
 
@@ -42,6 +43,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <InkCursor />
         {children}
+        <Analytics />
       </body>
     </html>
   );
