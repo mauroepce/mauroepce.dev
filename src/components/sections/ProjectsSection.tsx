@@ -54,8 +54,8 @@ const projects: Project[] = [
     description:
       "Production iOS/Android app commissioned by Chile's National Tourism Service (SERNATUR). Coordinates three separate codebases — React Native, Firebase Cloud Functions, and WordPress — sharing session and favorites state in real time. The hardest part: bidirectional sync with timestamp-based anti-loop guards, and a 3-level geo-normalized cache (coordinates quantized to ~1.1km cells) that returns list data in under 50ms — no dedicated caching infrastructure.",
     tags: ["React Native", "TypeScript", "Firebase", "Elasticsearch", "Expo", "WordPress", "Google Maps API", "EAS"],
-    appStore: "#",
-    playStore: "#",
+    appStore: "https://apps.apple.com/us/app/chile-travel/id1635199032",
+    playStore: "https://play.google.com/store/apps/details?id=cl.sernatur.chiletravel",
     github: null,
     live: null,
     year: "2025",
