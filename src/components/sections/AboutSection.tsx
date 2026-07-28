@@ -64,12 +64,8 @@ export default function AboutSection() {
         {/* Left: Text */}
         <div className="space-y-6">
           <FadeIn delay={0.1}>
-            <p className="text-sm font-mono text-foreground/65 leading-loose">
-              I work across three disciplines that share one thing — a line
-              drawn with intent. Software systems, drawing, fine line tattoo
-              on synthetic skin. The art isn&apos;t a hobby of the
-              engineering; the engineering isn&apos;t a hobby of the art.
-              Same hand.
+            <p className="font-serif italic text-2xl md:text-3xl text-foreground/85 leading-snug">
+              Three ways to draw a line.
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
